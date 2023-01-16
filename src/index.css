@@ -1,5 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Mulish:wght@400;700&display=swap");
+
 :root {
 	font-size: 62.5%;
+
+	--background-dark: linear-gradient(180deg, #33383d 0%, #1c1d20 100%);
+	--background-light: rgba(255, 255, 255, 0.95);
+
+	--button-login: linear-gradient(90deg, #ff2d04 0%, #c13216 100%);
+	--button-login-shadow: inset 5px 5px 15px rgba(0, 0, 0, 0.15);
+
+	--button-add: #00ba88;
+	--button-remove: #ff3d1f;
+
+	--white-primary: #fff;
+	--white-secondary: #e0e0e0;
+	--black-primary: #222222;
+	--black-secondary: #3b3e45;
+	--black-placeholder: rgba(0, 0, 0, 0.7);
+	--error-primary: #e9b425;
 
 	color-scheme: light dark;
 	font-synthesis: none;
@@ -13,4 +31,9 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+}
+
+html {
+	font-size: 1.6rem;
+	font-family: "Mulish", sans-serif;
 }
