@@ -1,10 +1,16 @@
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+
+import Register from "./pages/Register";
 import "./App.css";
 
 function App() {
 	return (
-		<main>
-			<h1>Weekly Planner</h1>
-		</main>
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<Navigate to="/register" />} />
+				<Route path="/register" element={<Register />} />
+			</Routes>
+		</BrowserRouter>
 	);
 }
 
