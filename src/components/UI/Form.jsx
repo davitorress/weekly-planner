@@ -7,6 +7,11 @@ const StyledForm = styled.form`
 	color: var(--white-secondary);
 	font-weight: 400;
 
+	& .form__title {
+		font-weight: 400;
+		font-size: 3rem;
+	}
+
 	& .form__inputs {
 		display: grid;
 		row-gap: 18px;
