@@ -5,31 +5,6 @@ const StyledDiv = styled.div`
 	grid-template-columns: 1fr 380px;
 	align-items: center;
 	position: relative;
-
-	${({ iconPath }) =>
-		iconPath
-			? `&::after {
-		content: "";
-		display: block;
-		width: 20px;
-		height: 100%;
-
-		right: 0;
-		z-index: 10;
-		position: absolute;
-
-		transition: 1.5s ease-in-out;
-		transform: translateX(200%);
-
-		background-position: center;
-		background-repeat: no-repeat;
-		background-image: url(${iconPath});
-	}`
-			: ""}
-
-	&:has(input:focus) + &::after {
-		transform: translateX(-150%);
-	}
 `;
 
 const StyledInput = styled.input`
@@ -44,16 +19,45 @@ const StyledInput = styled.input`
 
 	${({ label }) => (!label ? `grid-column: 2 span;` : "")}
 
+	&:focus ~ i,
+	&.input__icon ~ i {
+		transform: translateX(-150%);
+	}
+
 	&::placeholder {
 		font-size: 1.2rem;
 	}
 `;
 
-const Input = ({ label, type, name, id, placeholder, iconPath }) => {
+const StyledIcon = styled.i`
+	width: 20px;
+	height: 100%;
+
+	right: 0;
+	z-index: 10;
+	position: absolute;
+
+	transition: 1.5s ease-in-out;
+	transform: translateX(200%);
+
+	background-position: center;
+	background-repeat: no-repeat;
+	background-image: url(${({ iconPath }) => iconPath});
+`;
+
+const Input = ({ label, type, name, id, placeholder, className, iconPath }) => {
 	return (
-		<StyledDiv label={label} id={id} iconPath={iconPath}>
+		<StyledDiv label={label}>
 			{label && <label htmlFor={id}>{label}</label>}
-			<StyledInput label={label} type={type ? type : "text"} name={name} id={id} placeholder={placeholder} />
+			<StyledInput
+				label={label}
+				type={type ? type : "text"}
+				name={name}
+				id={id}
+				placeholder={placeholder}
+				className={className}
+			/>
+			<StyledIcon iconPath={iconPath} />
 		</StyledDiv>
 	);
 };

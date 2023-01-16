@@ -64,14 +64,8 @@ const Login = () => {
 						<section className="form__inputs">
 							<h2 className="form__title">Login</h2>
 
-							<Input name="first-name" id="first-name" placeholder="user name" iconPath="/src/assets/icon-user.svg" />
-							<Input
-								type="password"
-								name="password"
-								id="password"
-								placeholder="password"
-								iconPath="/src/assets/icon-password.svg"
-							/>
+							<Input name="first-name" id="first-name" placeholder="user name" iconPath={UserIcon} />
+							<Input type="password" name="password" id="password" placeholder="password" iconPath={LockIcon} />
 						</section>
 
 						<section>
