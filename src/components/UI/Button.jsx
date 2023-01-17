@@ -7,14 +7,38 @@ const StyledButton = styled.button`
 	font-family: "Mulish", sans-serif;
 	cursor: pointer;
 
+	border: none;
+	background: none;
+
 	&.button__form {
 		width: 100%;
 		padding: 14px 0;
 
-		border: none;
 		border-radius: 50px;
 		background: var(--button-login);
 		box-shadow: var(--button-login-shadow);
+	}
+
+	&.button__icon {
+		display: block;
+		color: var(--black-secondary);
+	}
+
+	&.button__action {
+		width: 20rem;
+		padding: 12px;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		border-radius: 10px;
+	}
+	&.button__action.add {
+		background-color: var(--button-add);
+	}
+	&.button__action.remove {
+		background-color: var(--button-remove);
 	}
 `;
 
