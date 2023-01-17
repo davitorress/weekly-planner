@@ -5,7 +5,7 @@ import UserIcon from "../assets/icon-user.svg";
 import LockIcon from "../assets/icon-password.svg";
 
 import Form from "../components/UI/Form";
-import Input from "../components/UI/Input";
+import InputGroup from "../components/UI/InputGroup";
 import Button from "../components/UI/Button";
 
 const StyledLogin = styled.main`
@@ -28,6 +28,7 @@ const StyledLogin = styled.main`
 
 		text-align: left;
 		font-size: 1.6rem;
+		color: var(--white-secondary);
 	}
 
 	.container h1 {
@@ -60,12 +61,25 @@ const Login = () => {
 						<p>To continue browsing safely, log in to the network.</p>
 					</div>
 
-					<Form onSubmit={submitHandler}>
+					<Form onSubmit={submitHandler} className="form__account">
 						<section className="form__inputs">
 							<h2 className="form__title">Login</h2>
 
-							<Input name="first-name" id="first-name" placeholder="user name" iconPath={UserIcon} />
-							<Input type="password" name="password" id="password" placeholder="password" iconPath={LockIcon} />
+							<InputGroup
+								name="first-name"
+								id="first-name"
+								placeholder="user name"
+								className="input__account"
+								iconPath={UserIcon}
+							/>
+							<InputGroup
+								type="password"
+								name="password"
+								id="password"
+								placeholder="password"
+								className="input__account"
+								iconPath={LockIcon}
+							/>
 						</section>
 
 						<section>
