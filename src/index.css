@@ -28,6 +28,8 @@
 	--saturday-color: #ffce00b2;
 	--sunday-color: #ff002480;
 
+	--meeting-invalid: #000000b2;
+
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
