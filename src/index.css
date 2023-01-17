@@ -17,9 +17,17 @@
 	--black-primary: #222222;
 	--black-secondary: #3b3e45;
 	--black-placeholder: rgba(0, 0, 0, 0.7);
-	--error-primary: #e9b425;
+	--yellow-error: #e9b425;
+	--yellow-action-border: #fece00;
 
-	color-scheme: light dark;
+	--monday-color: #ff0024;
+	--tuesday-color: #ff8000;
+	--wednesday-color: #ffce00;
+	--thursday-color: #ff0024b2;
+	--friday-color: #ff8000b2;
+	--saturday-color: #ffce00b2;
+	--sunday-color: #ff002480;
+
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
