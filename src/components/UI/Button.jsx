@@ -40,6 +40,17 @@ const StyledButton = styled.button`
 	&.button__action.remove {
 		background-color: var(--button-remove);
 	}
+
+	&.button__card {
+		margin: 5px;
+		padding: 0 5px;
+		height: 25px;
+
+		font-size: 1.4rem;
+
+		border-radius: 4px;
+		background-color: var(--button-remove);
+	}
 `;
 
 const Button = ({ children, type, className, fontWeight, fontSize }) => {
