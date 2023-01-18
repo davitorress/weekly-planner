@@ -21,6 +21,17 @@ const StyledInput = styled.input`
 
 	${({ label }) => (!label ? `grid-column: 2 span;` : "")}
 
+	&:focus {
+		outline: 2px solid #fff;
+	}
+
+	&.invalid {
+		border: 1px solid var(--yellow-error);
+	}
+	&:focus.invalid {
+		outline: 2px solid var(--yellow-error);
+	}
+
 	&:focus ~ i,
 	&.input__icon ~ i {
 		transform: translateX(-150%);
@@ -35,7 +46,7 @@ const StyledInput = styled.input`
 	}
 `;
 
-const InputGroup = ({ label, type, name, id, placeholder, className, iconPath }) => {
+const InputGroup = ({ label, type, name, id, placeholder, className, iconPath, value, onChange, onFocus }) => {
 	return (
 		<StyledDiv label={label}>
 			{label && <label htmlFor={id}>{label}</label>}
@@ -46,6 +57,9 @@ const InputGroup = ({ label, type, name, id, placeholder, className, iconPath })
 				id={id}
 				placeholder={placeholder}
 				className={className}
+				value={value}
+				onChange={onChange}
+				onFocus={onFocus}
 			/>
 			<Icon className="icon__input" iconPath={iconPath} />
 		</StyledDiv>
