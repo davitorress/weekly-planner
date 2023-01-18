@@ -51,11 +51,23 @@ const StyledButton = styled.button`
 		border-radius: 4px;
 		background-color: var(--button-remove);
 	}
+
+	&.button__link {
+		color: var(--button-remove);
+		font-size: 1.8rem;
+		text-decoration: underline;
+	}
 `;
 
-const Button = ({ children, type, className, fontWeight, fontSize }) => {
+const Button = ({ children, type, className, onClick, fontWeight, fontSize }) => {
 	return (
-		<StyledButton type={type ? type : "button"} className={className} fontWeight={fontWeight} fontSize={fontSize}>
+		<StyledButton
+			type={type ? type : "button"}
+			className={className}
+			onClick={onClick}
+			fontWeight={fontWeight}
+			fontSize={fontSize}
+		>
 			{children}
 		</StyledButton>
 	);
