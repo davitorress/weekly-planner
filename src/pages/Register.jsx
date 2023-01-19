@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -8,6 +9,7 @@ import InputGroup from "../components/UI/InputGroup";
 import Button from "../components/UI/Button";
 
 import useInput from "../hooks/useInput";
+import { UserContext } from "../store/userContext";
 
 const StyledRegister = styled.main`
 	display: grid;
@@ -50,6 +52,8 @@ const StyledRegister = styled.main`
 
 const Register = () => {
 	const navigate = useNavigate();
+
+	const userCtx = useContext(UserContext);
 
 	const {
 		value: firstName,
@@ -158,9 +162,9 @@ const Register = () => {
 			city: cityValue,
 			email: emailValue,
 			password: passwordValue,
-			isLogged: false,
 		};
 
+		userCtx.register(userData);
 		localStorage.setItem("user", JSON.stringify(userData));
 
 		resetFirstName();

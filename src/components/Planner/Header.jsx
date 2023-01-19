@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import Cloud from "../../assets/cloud.svg";
@@ -6,6 +8,7 @@ import Arrow from "../../assets/arrow-right-north.svg";
 
 import Button from "../UI/Button";
 import Icon from "../UI/Icon";
+import { AuthContext } from "../../store/authContext";
 
 const StyledHeader = styled.header`
 	display: grid;
@@ -75,12 +78,22 @@ const StyledSection = styled.section`
 		align-items: center;
 	}
 	&.planner__logout p {
+		color: #000;
 		font-weight: 400;
 		font-size: 1.8rem;
 	}
 `;
 
 const Header = () => {
+	const navigate = useNavigate();
+
+	const authCtx = useContext(AuthContext);
+
+	const logoutHandler = () => {
+		authCtx.logout();
+		navigate("/login");
+	};
+
 	return (
 		<StyledHeader>
 			<StyledSection className="planner__name">
@@ -103,7 +116,7 @@ const Header = () => {
 
 			<StyledSection className="planner__logout">
 				<img src={CompassBlack} />
-				<Button className="button__icon">
+				<Button className="button__icon" onClick={logoutHandler}>
 					<Icon iconPath={Arrow} className="icon__button" />
 					<p>Logout</p>
 				</Button>

@@ -1,19 +1,27 @@
+import { useContext } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+
+import { AuthContext } from "./store/authContext";
+import { UserProvider } from "./store/userContext";
+
 import "./App.css";
 
 function App() {
+	const { isLogged } = useContext(AuthContext);
+
 	return (
 		<BrowserRouter>
-			<Routes>
-				<Route path="/" element={<Navigate to="/register" />} />
-				<Route path="/home" element={<Dashboard />} />
-				<Route path="/register" element={<Register />} />
-				<Route path="/login" element={<Login />} />
-			</Routes>
+			<UserProvider>
+				<Routes>
+					<Route path="/" element={isLogged ? <Dashboard /> : <Navigate to="/register" />} />
+					<Route path="/register" element={isLogged ? <Navigate to="/" /> : <Register />} />
+					<Route path="/login" element={isLogged ? <Navigate to="/" /> : <Login />} />
+				</Routes>
+			</UserProvider>
 		</BrowserRouter>
 	);
 }

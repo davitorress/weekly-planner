@@ -1,3 +1,4 @@
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -10,7 +11,7 @@ import InputGroup from "../components/UI/InputGroup";
 import Button from "../components/UI/Button";
 
 import useInput from "../hooks/useInput";
-import { useEffect, useState } from "react";
+import { AuthContext } from "../store/authContext";
 
 const StyledLogin = styled.main`
 	display: grid;
@@ -55,6 +56,8 @@ const Login = () => {
 	const navigate = useNavigate();
 
 	const [errorMessage, setErrorMessage] = useState();
+
+	const authCtx = useContext(AuthContext);
 
 	const userData = JSON.parse(localStorage.getItem("user"));
 
@@ -139,16 +142,15 @@ const Login = () => {
 			return;
 		}
 
-		userData.isLogged = true;
-		localStorage.setItem("user", JSON.stringify(userData));
+		resetUsername();
+		resetPassword();
 
-		navigate("/home");
+		authCtx.login();
+		navigate("/");
 	};
 
 	const registerHandler = () => {
-		userData.isLogged = false;
-		localStorage.setItem("user", JSON.stringify(userData));
-
+		authCtx.logout();
 		navigate("/register");
 	};
 
