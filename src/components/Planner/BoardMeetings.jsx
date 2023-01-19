@@ -49,6 +49,11 @@ const StyledCards = styled.section`
 	display: flex;
 	flex-direction: column;
 	row-gap: 1.5rem;
+
+	& div {
+		display: flex;
+		gap: 2rem;
+	}
 `;
 
 const StyledCard = styled.div`
@@ -103,22 +108,41 @@ const BoardMeetings = () => {
 					<StyledTime day="monday" className="invalid">
 						11h30m
 					</StyledTime>
+					<StyledTime day="monday">12h30m</StyledTime>
 				</ul>
 			</StyledTimes>
 			<StyledCards>
 				<StyledCard />
-				<StyledCard day="monday">
-					<p>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor sit amet, consectetur adipiscing
-					</p>
-					<Button className="button__card">Delete</Button>
-				</StyledCard>
-				<StyledCard day="monday" className="invalid">
-					<p>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor sit amet, consectetur adipiscing
-					</p>
-					<Button className="button__card">Delete</Button>
-				</StyledCard>
+				<div>
+					<StyledCard day="monday">
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor sit amet, consectetur adipiscing
+						</p>
+						<Button className="button__card">Delete</Button>
+					</StyledCard>
+				</div>
+				<div>
+					<StyledCard day="monday" className="invalid">
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor sit amet, consectetur adipiscing
+						</p>
+						<Button className="button__card">Delete</Button>
+					</StyledCard>
+					<StyledCard day="monday" className="invalid">
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor sit amet, consectetur adipiscing
+						</p>
+						<Button className="button__card">Delete</Button>
+					</StyledCard>
+				</div>
+				<div>
+					<StyledCard day="monday">
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor sit amet, consectetur adipiscing
+						</p>
+						<Button className="button__card">Delete</Button>
+					</StyledCard>
+				</div>
 			</StyledCards>
 		</StyledMeetings>
 	);
