@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import useSortMeetings from "../hooks/useSortMeetings";
 
 const defaultMeetings = {
 	meetings: [],
@@ -15,6 +16,12 @@ export const MeetingsContext = createContext(defaultMeetings);
 export const MeetingsProvider = ({ children }) => {
 	const [meetings, setMeetings] = useState(defaultMeetings.meetings);
 	const [filter, setFilter] = useState(defaultMeetings.filter);
+
+	const filteredMeetings = [...meetings].filter((item) => {
+		return item.day === filter;
+	});
+
+	const sortedMeetings = useSortMeetings(filteredMeetings);
 
 	const filterTasks = (filter) => {
 		setFilter(filter);
@@ -66,9 +73,7 @@ export const MeetingsProvider = ({ children }) => {
 	};
 
 	const ctx = {
-		meetings: [...meetings].filter((item) => {
-			return item.day === filter;
-		}),
+		meetings: sortedMeetings,
 		filter,
 		days: defaultMeetings.days,
 		filterTasks,
