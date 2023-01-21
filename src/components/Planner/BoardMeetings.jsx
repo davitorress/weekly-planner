@@ -115,9 +115,9 @@ const BoardMeetings = () => {
 				const invalid = tasks.length > 1 ? "invalid" : "";
 
 				return (
-					<StyledTasks key={`${day}${time}`}>
+					<StyledTasks key={id}>
 						<StyledTime day={day} className={invalid}>
-							{time}
+							{time.split(":")[0]}h{time.split(":")[1]}m
 						</StyledTime>
 						<StyledCards className={invalid}>
 							{tasks.map((text, index) => {
