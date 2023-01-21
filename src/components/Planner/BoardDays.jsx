@@ -23,16 +23,26 @@ const StyledLi = styled.li`
 	border-radius: 9px 9px 0px 0px;
 	background-color: var(--${({ day }) => day}-color);
 	box-shadow: 0px 4px 24px rgba(168, 168, 168, 0.25);
+
+	&.active {
+		flex-grow: 1;
+		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 24px rgba(168, 168, 168, 0.25);
+	}
 `;
 
 const BoardDays = () => {
-	const { days, filterTasks } = useContext(MeetingsContext);
+	const { days, filter, filterTasks } = useContext(MeetingsContext);
 
 	return (
 		<StyledUl>
 			{days.map((day) => {
 				return (
-					<StyledLi key={day.toLowerCase()} day={day.toLowerCase()} onClick={() => filterTasks(day.toLowerCase())}>
+					<StyledLi
+						key={day.toLowerCase()}
+						day={day.toLowerCase()}
+						className={filter === day.toLowerCase() ? "active" : ""}
+						onClick={() => filterTasks(day.toLowerCase())}
+					>
 						{day}
 					</StyledLi>
 				);
