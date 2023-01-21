@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -8,7 +8,9 @@ import Arrow from "../../assets/arrow-right-north.svg";
 
 import Button from "../UI/Button";
 import Icon from "../UI/Icon";
+
 import { AuthContext } from "../../store/authContext";
+import { UserContext } from "../../store/userContext";
 
 const StyledHeader = styled.header`
 	display: grid;
@@ -88,6 +90,57 @@ const Header = () => {
 	const navigate = useNavigate();
 
 	const authCtx = useContext(AuthContext);
+	const { city } = useContext(UserContext);
+
+	const [weather, setWeather] = useState();
+	const [isLoading, setIsLoading] = useState(true);
+	const [weatherError, setWeatherError] = useState("");
+
+	let currentTime = new Date().toLocaleTimeString([], {
+		hour: "2-digit",
+		minute: "2-digit",
+	});
+	const [time, setTime] = useState(currentTime);
+
+	let currentDate = new Date().toLocaleDateString(["en-US"], { dateStyle: "long" }).split(",");
+	const dateMessage = currentDate[0].concat("th,").concat(currentDate[1]);
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			currentTime = new Date().toLocaleTimeString([], {
+				hour: "2-digit",
+				minute: "2-digit",
+			});
+
+			setTime(currentTime);
+		}, 1000);
+
+		return () => {
+			clearInterval(interval);
+		};
+	}, []);
+
+	const weatherHandler = (city) => {
+		fetch(`http://api.weatherapi.com/v1/current.json?key=${import.meta.env.VITE_APP_WEATHER_API_KEY}&q=${city}&lang=en`)
+			.then((res) => {
+				if (res.ok) return res.json();
+				else {
+					console.log(res);
+					setWeatherError("Location not found!");
+				}
+			})
+
+			.then((data) => {
+				setWeather(data);
+				setIsLoading(false);
+			});
+	};
+
+	useEffect(() => {
+		weatherHandler(city);
+
+		return () => {};
+	}, []);
 
 	const logoutHandler = () => {
 		authCtx.logout();
@@ -102,16 +155,38 @@ const Header = () => {
 			</StyledSection>
 
 			<StyledSection className="planner__datetime">
-				<h2>10:58</h2>
-				<p>November 22th, 2022</p>
+				<h2>{time}</h2>
+				<p>{dateMessage}</p>
 			</StyledSection>
 
 			<StyledSection className="planner__climate">
-				<p>Asunción - Paraguay</p>
-				<h2>
-					<img src={Cloud} alt="cloud" />
-					22°
-				</h2>
+				{isLoading ? (
+					<h2>
+						<img src={Cloud} alt="cloud" />
+						Loading...
+					</h2>
+				) : (
+					<>
+						{weatherError ? (
+							<>
+								<p>{weatherError}</p>
+								<h2>
+									<img src={Cloud} alt="cloud" />
+								</h2>
+							</>
+						) : (
+							<>
+								<p>
+									{weather.location.name} - {weather.location.country}
+								</p>
+								<h2>
+									<img src={Cloud} alt="cloud" />
+									{weather.current.temp_c}°
+								</h2>
+							</>
+						)}
+					</>
+				)}
 			</StyledSection>
 
 			<StyledSection className="planner__logout">

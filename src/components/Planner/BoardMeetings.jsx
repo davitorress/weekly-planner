@@ -1,40 +1,35 @@
+import { useContext } from "react";
 import styled from "styled-components";
+
 import Button from "../UI/Button";
+import { MeetingsContext } from "../../store/meetingsContext";
 
 const StyledMeetings = styled.section`
+	padding: 1rem 0;
 	display: grid;
-	grid-template-columns: 100px 1fr;
+	row-gap: 1.5rem;
 `;
 
-const StyledTimes = styled.aside`
-	ul {
-		list-style: none;
-		display: grid;
-		row-gap: 1.5rem;
-	}
-
-	ul li {
-		width: 85px;
-		height: 85px;
-
-		display: flex;
-		align-items: center;
-		justify-content: center;
-
-		font-weight: 600;
-		font-size: 1.6rem;
-
-		border-radius: 10px;
-		box-shadow: 0px 4px 24px rgba(168, 168, 168, 0.25);
-	}
-
-	ul li:first-child {
-		color: var(--black-secondary);
-		background-color: #fff;
-	}
+const StyledTasks = styled.section`
+	height: 85px;
+	display: flex;
+	gap: 1.5rem;
 `;
 
-const StyledTime = styled.li`
+const StyledTime = styled.aside`
+	width: 85px;
+	height: 85px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	font-weight: 600;
+	font-size: 1.6rem;
+
+	border-radius: 10px;
+	box-shadow: 0px 4px 24px rgba(168, 168, 168, 0.25);
+
 	color: #000;
 	background-color: var(--${({ day }) => day}-color);
 
@@ -47,12 +42,20 @@ const StyledTime = styled.li`
 
 const StyledCards = styled.section`
 	display: flex;
-	flex-direction: column;
-	row-gap: 1.5rem;
+	gap: 1.5rem;
+	position: relative;
 
-	& div {
-		display: flex;
-		gap: 2rem;
+	&.invalid::before {
+		content: "";
+		width: 100%;
+		height: 5px;
+
+		top: 50%;
+		left: 0;
+		z-index: 10;
+		position: absolute;
+
+		background-color: var(--meeting-invalid);
 	}
 `;
 
@@ -60,6 +63,7 @@ const StyledCard = styled.div`
 	width: 50rem;
 	height: 85px;
 	display: flex;
+	gap: 2rem;
 
 	overflow: hidden;
 	border-radius: 15px;
@@ -99,51 +103,37 @@ const StyledCard = styled.div`
 `;
 
 const BoardMeetings = () => {
+	const { meetings, removeTask } = useContext(MeetingsContext);
+
 	return (
 		<StyledMeetings>
-			<StyledTimes>
-				<ul>
-					<li className="time">Time</li>
-					<StyledTime day="monday">10h30m</StyledTime>
-					<StyledTime day="monday" className="invalid">
-						11h30m
-					</StyledTime>
-					<StyledTime day="monday">12h30m</StyledTime>
-				</ul>
-			</StyledTimes>
-			<StyledCards>
-				<StyledCard />
-				<div>
-					<StyledCard day="monday">
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor sit amet, consectetur adipiscing
-						</p>
-						<Button className="button__card">Delete</Button>
-					</StyledCard>
-				</div>
-				<div>
-					<StyledCard day="monday" className="invalid">
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor sit amet, consectetur adipiscing
-						</p>
-						<Button className="button__card">Delete</Button>
-					</StyledCard>
-					<StyledCard day="monday" className="invalid">
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor sit amet, consectetur adipiscing
-						</p>
-						<Button className="button__card">Delete</Button>
-					</StyledCard>
-				</div>
-				<div>
-					<StyledCard day="monday">
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor sit amet, consectetur adipiscing
-						</p>
-						<Button className="button__card">Delete</Button>
-					</StyledCard>
-				</div>
-			</StyledCards>
+			<StyledTasks>
+				<StyledTime>Time</StyledTime>
+			</StyledTasks>
+
+			{meetings.map(({ id, day, time, tasks }) => {
+				const invalid = tasks.length > 1 ? "invalid" : "";
+
+				return (
+					<StyledTasks key={`${day}${time}`}>
+						<StyledTime day={day} className={invalid}>
+							{time}
+						</StyledTime>
+						<StyledCards className={invalid}>
+							{tasks.map((text, index) => {
+								return (
+									<StyledCard key={`${id}-${index}`} day={day} className={invalid}>
+										<p>{text}</p>
+										<Button className="button__card" onClick={() => removeTask(`${id}-${index}`)}>
+											Delete
+										</Button>
+									</StyledCard>
+								);
+							})}
+						</StyledCards>
+					</StyledTasks>
+				);
+			})}
 		</StyledMeetings>
 	);
 };

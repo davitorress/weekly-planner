@@ -1,4 +1,7 @@
+import { useContext } from "react";
 import styled from "styled-components";
+
+import { MeetingsContext } from "../../store/meetingsContext";
 
 const StyledUl = styled.ul`
 	display: flex;
@@ -15,21 +18,25 @@ const StyledLi = styled.li`
 	font-weight: 600;
 	font-size: 2rem;
 
+	cursor: pointer;
+
 	border-radius: 9px 9px 0px 0px;
 	background-color: var(--${({ day }) => day}-color);
 	box-shadow: 0px 4px 24px rgba(168, 168, 168, 0.25);
 `;
 
 const BoardDays = () => {
+	const { days, filterTasks } = useContext(MeetingsContext);
+
 	return (
 		<StyledUl>
-			<StyledLi day="monday">Monday</StyledLi>
-			<StyledLi day="tuesday">Tuesday</StyledLi>
-			<StyledLi day="wednesday">Wednesday</StyledLi>
-			<StyledLi day="thursday">Thursday</StyledLi>
-			<StyledLi day="friday">Friday</StyledLi>
-			<StyledLi day="saturday">Saturday</StyledLi>
-			<StyledLi day="sunday">Sunday</StyledLi>
+			{days.map((day) => {
+				return (
+					<StyledLi key={day.toLowerCase()} day={day.toLowerCase()} onClick={() => filterTasks(day.toLowerCase())}>
+						{day}
+					</StyledLi>
+				);
+			})}
 		</StyledUl>
 	);
 };
