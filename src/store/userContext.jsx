@@ -1,16 +1,23 @@
 import { createContext, useReducer } from "react";
 
-const defaultUser = {
-	firstName: "",
-	lastName: "",
-	username: "",
-	birthDate: "",
-	country: "",
-	city: "",
-	email: "",
-	password: "",
-	register(user) {},
-};
+const userData = JSON.parse(localStorage.getItem("user"));
+
+const defaultUser = userData
+	? {
+			register(user) {},
+			...userData,
+	  }
+	: {
+			firstName: "",
+			lastName: "",
+			username: "",
+			birthDate: "",
+			country: "",
+			city: "",
+			email: "",
+			password: "",
+			register(user) {},
+	  };
 
 export const UserContext = createContext(defaultUser);
 
