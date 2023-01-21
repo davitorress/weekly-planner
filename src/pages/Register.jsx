@@ -308,7 +308,9 @@ const Register = () => {
 			</section>
 
 			<section className="background-img">
-				<img src={CompassWhite} alt="" />
+				<a href="https://compass.uol/en/home/" target="_blank">
+					<img src={CompassWhite} alt="Compass.uol logo" />
+				</a>
 			</section>
 		</StyledRegister>
 	);

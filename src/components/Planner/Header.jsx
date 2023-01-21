@@ -190,7 +190,9 @@ const Header = () => {
 			</StyledSection>
 
 			<StyledSection className="planner__logout">
-				<img src={CompassBlack} />
+				<a href="https://compass.uol/en/home/" target="_blank">
+					<img src={CompassBlack} alt="Compass.uol logo" />
+				</a>
 				<Button className="button__icon" onClick={logoutHandler}>
 					<Icon iconPath={Arrow} className="icon__button" />
 					<p>Logout</p>
