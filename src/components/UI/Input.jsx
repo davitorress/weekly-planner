@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import styled from "styled-components";
 
 const StyledInput = styled.input`
@@ -20,10 +21,17 @@ const StyledInput = styled.input`
 	}
 `;
 
-const Input = ({ type, name, id, placeholder, className }) => {
+const Input = forwardRef(({ type, name, id, placeholder, className }, ref) => {
 	return (
-		<StyledInput type={type ? type : "text"} name={name} id={id} placeholder={placeholder} className={className} />
+		<StyledInput
+			ref={ref}
+			type={type ? type : "text"}
+			name={name}
+			id={id}
+			placeholder={placeholder}
+			className={className}
+		/>
 	);
-};
+});
 
 export default Input;

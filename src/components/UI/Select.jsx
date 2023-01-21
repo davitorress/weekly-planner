@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import styled from "styled-components";
 
 const StyledSelect = styled.select`
@@ -18,12 +19,12 @@ const StyledSelect = styled.select`
 	}
 `;
 
-const Select = ({ children, defaultValue, className }) => {
+const Select = forwardRef(({ children, defaultValue, className }, ref) => {
 	return (
-		<StyledSelect defaultValue={defaultValue} className={className}>
+		<StyledSelect ref={ref} defaultValue={defaultValue} className={className}>
 			{children}
 		</StyledSelect>
 	);
-};
+});
 
 export default Select;
