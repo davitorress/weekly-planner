@@ -46,15 +46,36 @@ Clone repository:
 git clone https://github.com/davitorress/weekly-planner.git
 ```
 
+---
+
 Step 2
-Install dependencies and start application server:
+Install dependencies:
 
 ```bash
 npm install
+```
+
+---
+
+> **Note:**
+> you will need an <i>API Key</i> from the <a href="https://www.weatherapi.com/" title="https://www.weatherapi.com/">Weather API</a> website and create a **.env** file in the root path with this content
+
+```properties
+VITE_APP_WEATHER_API_KEY = [YOUR API KEY]
+```
+
+---
+
+Step 3
+Start application server:
+
+```bash
 npm run dev
 ```
 
-Step 3
+---
+
+Step 4
 Opening application:
 
 In the command terminal it will show the access links to the project, by default it is localhost on port 5173
