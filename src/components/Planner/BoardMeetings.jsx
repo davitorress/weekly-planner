@@ -5,9 +5,29 @@ import Button from "../UI/Button";
 import { MeetingsContext } from "../../store/meetingsContext";
 
 const StyledMeetings = styled.section`
+	width: 97vw;
+	height: 55vh;
+
 	padding: 1rem 0;
-	display: grid;
+	display: flex;
+	flex-direction: column;
 	row-gap: 1.5rem;
+
+	overflow-x: scroll;
+	overflow-y: scroll;
+
+	&::-webkit-scrollbar {
+		width: 16px;
+		background: #ffffff;
+		border-radius: 22px;
+	}
+	&::-webkit-scrollbar-thumb {
+		background: #dcdfe3;
+		border-radius: 8px;
+	}
+	&::-webkit-scrollbar-corner {
+		visibility: hidden;
+	}
 `;
 
 const StyledTasks = styled.section`
@@ -20,6 +40,7 @@ const StyledTime = styled.aside`
 	width: 85px;
 	height: 85px;
 
+	padding: 1rem;
 	display: flex;
 	align-items: center;
 	justify-content: center;
