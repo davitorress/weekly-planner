@@ -18,7 +18,7 @@ const StyledContent = styled.section`
 	display: grid;
 	grid-template-rows: 105px 1fr;
 
-	padding: 0 30px;
+	padding: 0 20px;
 
 	background-size: 30%;
 	background-repeat: no-repeat;

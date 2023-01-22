@@ -4,7 +4,7 @@ import BoardDays from "./BoardDays";
 import BoardMeetings from "./BoardMeetings";
 
 const StyledBoard = styled.section`
-	padding: 30px 0;
+	padding-top: 20px;
 `;
 
 const Board = () => {
