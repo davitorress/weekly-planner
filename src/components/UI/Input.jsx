@@ -19,6 +19,13 @@ const StyledInput = styled.input`
 	&:focus.input__action {
 		outline: 2px solid var(--yellow-action-border);
 	}
+
+	&.input__action:-webkit-autofill,
+	&.input__action:-webkit-autofill:hover,
+	&.input__action:-webkit-autofill:focus {
+		-webkit-text-fill-color: var(--black-secondary);
+		-webkit-box-shadow: 0 0 0 30px #fff inset;
+	}
 `;
 
 const Input = forwardRef(({ type, name, id, placeholder, className }, ref) => {

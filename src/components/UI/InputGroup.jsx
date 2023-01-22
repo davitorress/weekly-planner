@@ -21,6 +21,12 @@ const StyledInput = styled.input`
 
 	${({ label }) => (!label ? `grid-column: 2 span;` : "")}
 
+	&:-webkit-autofill,
+	&:-webkit-autofill:hover,
+	&:-webkit-autofill:focus {
+		-webkit-text-fill-color: var(--white-secondary);
+	}
+
 	&:focus {
 		outline: 2px solid #fff;
 	}
@@ -43,6 +49,12 @@ const StyledInput = styled.input`
 
 	&.input__account {
 		background-color: #26292c;
+	}
+
+	&.input__account:-webkit-autofill,
+	&.input__account:-webkit-autofill:hover,
+	&.input__account:-webkit-autofill:focus {
+		-webkit-box-shadow: 0 0 0 30px #26292c inset;
 	}
 `;
 
