@@ -47,6 +47,21 @@ const StyledCards = styled.section`
 
 	&.invalid::before {
 		content: "";
+		width: 25px;
+		height: 25px;
+
+		top: 36.66%;
+		left: 0%;
+		z-index: 10;
+		position: absolute;
+
+		transform: translateX(-50%);
+
+		border-radius: 50%;
+		background-color: var(--meeting-invalid);
+	}
+	&.invalid::after {
+		content: "";
 		width: 100%;
 		height: 5px;
 
