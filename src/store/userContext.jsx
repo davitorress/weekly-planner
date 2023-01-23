@@ -2,6 +2,22 @@ import { createContext, useReducer } from "react";
 
 const userData = JSON.parse(localStorage.getItem("user"));
 
+if (!userData) {
+	localStorage.setItem(
+		"user",
+		JSON.stringify({
+			firstName: "",
+			lastName: "",
+			username: "",
+			birthDate: "",
+			country: "",
+			city: "",
+			email: "",
+			password: "",
+		})
+	);
+}
+
 const defaultUser = userData
 	? {
 			register(user) {},
