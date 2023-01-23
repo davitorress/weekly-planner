@@ -25,13 +25,19 @@ const Actions = () => {
 	const submitHandler = (event) => {
 		event.preventDefault();
 
-		const newTask = {
-			day: dayRef.current.value,
-			time: timeRef.current.value,
-			text: taskRef.current.value,
-		};
+		if (
+			dayRef.current.value.trim() !== "" &&
+			timeRef.current.value.trim() !== "" &&
+			taskRef.current.value.trim() !== ""
+		) {
+			const newTask = {
+				day: dayRef.current.value,
+				time: timeRef.current.value,
+				text: taskRef.current.value,
+			};
 
-		addTask(newTask);
+			addTask(newTask);
+		}
 	};
 
 	return (
