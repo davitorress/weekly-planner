@@ -7,7 +7,7 @@ import CompassBlack from "../../assets/compass-black.svg";
 import Arrow from "../../assets/arrow-right-north.svg";
 
 import Button from "../UI/Button";
-import Icon from "../UI/Icon";
+import { Icon } from "../styled";
 
 import { AuthContext } from "../../store/authContext";
 import { UserContext } from "../../store/userContext";

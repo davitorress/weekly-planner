@@ -59,16 +59,10 @@ const StyledButton = styled.button`
 	}
 `;
 
-const Button = ({ children, type, className, onClick, fontWeight, fontSize }) => {
+const Button = (props) => {
 	return (
-		<StyledButton
-			type={type ? type : "button"}
-			className={className}
-			onClick={onClick}
-			fontWeight={fontWeight}
-			fontSize={fontSize}
-		>
-			{children}
+		<StyledButton {...props} type={props.type ? props.type : "button"}>
+			{props.children}
 		</StyledButton>
 	);
 };

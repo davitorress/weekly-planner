@@ -19,10 +19,10 @@ const StyledSelect = styled.select`
 	}
 `;
 
-const Select = forwardRef(({ children, defaultValue, className }, ref) => {
+const Select = forwardRef((props, ref) => {
 	return (
-		<StyledSelect ref={ref} defaultValue={defaultValue} className={className}>
-			{children}
+		<StyledSelect ref={ref} {...props}>
+			{props.children}
 		</StyledSelect>
 	);
 });

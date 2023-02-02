@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import Icon from "./Icon";
+import { Icon } from "../styled";
 
 const StyledDiv = styled.div`
 	display: grid;
@@ -58,22 +58,12 @@ const StyledInput = styled.input`
 	}
 `;
 
-const InputGroup = ({ label, type, name, id, placeholder, className, iconPath, value, onChange, onFocus }) => {
+const InputGroup = (props) => {
 	return (
-		<StyledDiv label={label}>
-			{label && <label htmlFor={id}>{label}</label>}
-			<StyledInput
-				label={label}
-				type={type ? type : "text"}
-				name={name}
-				id={id}
-				placeholder={placeholder}
-				className={className}
-				value={value}
-				onChange={onChange}
-				onFocus={onFocus}
-			/>
-			<Icon className="icon__input" iconPath={iconPath} />
+		<StyledDiv label={props.label}>
+			{props.label && <label htmlFor={props.id}>{props.label}</label>}
+			<StyledInput {...props} label={props.label} type={props.type ? props.type : "text"} />
+			<Icon className="icon__input" iconPath={props.iconPath} />
 		</StyledDiv>
 	);
 };

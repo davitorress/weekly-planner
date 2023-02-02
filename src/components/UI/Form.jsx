@@ -48,12 +48,8 @@ const StyledForm = styled.form`
 	}
 `;
 
-const Form = ({ onSubmit, children, className }) => {
-	return (
-		<StyledForm onSubmit={onSubmit} className={className}>
-			{children}
-		</StyledForm>
-	);
+const Form = (props) => {
+	return <StyledForm {...props}>{props.children}</StyledForm>;
 };
 
 export default Form;

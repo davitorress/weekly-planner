@@ -28,17 +28,8 @@ const StyledInput = styled.input`
 	}
 `;
 
-const Input = forwardRef(({ type, name, id, placeholder, className }, ref) => {
-	return (
-		<StyledInput
-			ref={ref}
-			type={type ? type : "text"}
-			name={name}
-			id={id}
-			placeholder={placeholder}
-			className={className}
-		/>
-	);
+const Input = forwardRef((props, ref) => {
+	return <StyledInput ref={ref} {...props} type={props.type ? props.type : "text"} />;
 });
 
 export default Input;
