@@ -2,9 +2,9 @@ import { useContext } from "react";
 import styled from "styled-components";
 
 import Button from "../UI/Button";
-import { MeetingsContext } from "../../store/meetingsContext";
+import { TaskContext } from "../../store/taskContext";
 
-const StyledMeetings = styled.section`
+const StyledSection = styled.section`
 	width: 97vw;
 	height: 55vh;
 
@@ -131,24 +131,27 @@ const StyledCard = styled.div`
 
 		color: #333;
 		font-size: 1.6rem;
-		/* white-space: nowrap; */
-		word-break: break-all;
+
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
 `;
 
-const BoardMeetings = () => {
-	const { meetings, removeTask } = useContext(MeetingsContext);
+const BoardTasks = () => {
+	const { tasks, removeTask } = useContext(TaskContext);
 
 	return (
-		<StyledMeetings>
+		<StyledSection>
 			<StyledTasks>
 				<StyledTime>Time</StyledTime>
 			</StyledTasks>
 
-			{meetings.map(({ id, day, time, tasks }) => {
-				const invalid = tasks.length > 1 ? "invalid" : "";
+			{tasks.map(({ id, day, time, cards }) => {
+				const invalid = cards.length > 1 ? "invalid" : "";
 
 				return (
 					<StyledTasks key={id}>
@@ -156,11 +159,11 @@ const BoardMeetings = () => {
 							{time.split(":")[0]}h{time.split(":")[1]}m
 						</StyledTime>
 						<StyledCards className={invalid}>
-							{tasks.map((text, index) => {
+							{cards.map((text, index) => {
 								return (
 									<StyledCard key={`${id}-${index}`} day={day} className={invalid}>
 										<p>{text}</p>
-										<Button className="button__card" onClick={() => removeTask(`${id}-${index}`)}>
+										<Button className="button__card" onClick={() => removeTask(id, index)}>
 											Delete
 										</Button>
 									</StyledCard>
@@ -170,8 +173,8 @@ const BoardMeetings = () => {
 					</StyledTasks>
 				);
 			})}
-		</StyledMeetings>
+		</StyledSection>
 	);
 };
 
-export default BoardMeetings;
+export default BoardTasks;

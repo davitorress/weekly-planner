@@ -6,7 +6,7 @@ import Input from "../UI/Input";
 import Button from "../UI/Button";
 import Select from "../UI/Select";
 
-import { MeetingsContext } from "../../store/meetingsContext";
+import { TaskContext } from "../../store/taskContext";
 
 const StyledActions = styled.section`
 	width: 100%;
@@ -19,8 +19,8 @@ const Actions = () => {
 	const dayRef = createRef();
 	const timeRef = createRef();
 
-	const { filter } = useContext(MeetingsContext);
-	const { addTask, deleteAllTasks } = useContext(MeetingsContext);
+	const { filter } = useContext(TaskContext);
+	const { addTask, deleteAllTasks } = useContext(TaskContext);
 
 	const submitHandler = (event) => {
 		event.preventDefault();

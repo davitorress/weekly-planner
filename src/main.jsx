@@ -5,17 +5,16 @@ import "./index.css";
 
 import { AuthProvider } from "./store/authContext";
 import { UserProvider } from "./store/userContext";
-import { MeetingsProvider } from "./store/meetingsContext";
+import { TaskProvider } from "./store/taskContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
 	<React.StrictMode>
 		<AuthProvider>
 			<UserProvider>
-				<MeetingsProvider>
+				<TaskProvider>
 					<App />
-				</MeetingsProvider>
+				</TaskProvider>
 			</UserProvider>
 		</AuthProvider>
 	</React.StrictMode>
 );
-

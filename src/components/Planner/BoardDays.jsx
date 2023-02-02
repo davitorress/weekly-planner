@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import styled from "styled-components";
 
-import { MeetingsContext } from "../../store/meetingsContext";
+import { TaskContext } from "../../store/taskContext";
 
 const StyledUl = styled.ul`
 	display: flex;
@@ -31,7 +31,7 @@ const StyledLi = styled.li`
 `;
 
 const BoardDays = () => {
-	const { days, filter, filterTasks } = useContext(MeetingsContext);
+	const { days, filter, filterTasks } = useContext(TaskContext);
 
 	return (
 		<StyledUl>
