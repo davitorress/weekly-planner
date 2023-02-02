@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 
 import CompassWhite from "../assets/compass-white.svg";
 import UserIcon from "../assets/icon-user.svg";
@@ -9,48 +8,10 @@ import LockIcon from "../assets/icon-password.svg";
 import Form from "../components/UI/Form";
 import InputGroup from "../components/UI/InputGroup";
 import Button from "../components/UI/Button";
+import { StyledAccount } from "../components/styled";
 
 import useInput from "../hooks/useInput";
 import { AuthContext } from "../store/authContext";
-
-const StyledLogin = styled.main`
-	display: grid;
-	align-items: center;
-	grid-template-columns: 50% 50%;
-	text-align: center;
-	background: var(--background-dark);
-
-	& section:first-child {
-		padding: 3rem 0;
-	}
-
-	.container {
-		margin: 0 auto;
-		max-width: 380px;
-
-		display: grid;
-		row-gap: 5rem;
-
-		text-align: left;
-		font-size: 1.6rem;
-		color: var(--white-secondary);
-	}
-
-	.container h1 {
-		font-weight: 400;
-		font-size: 6rem;
-	}
-
-	.background-img {
-		width: 100%;
-		height: 100%;
-		padding: 2rem;
-
-		overflow: clip;
-		background-size: cover;
-		background-image: url("/src/assets/back.png");
-	}
-`;
 
 const Login = () => {
 	const navigate = useNavigate();
@@ -155,7 +116,7 @@ const Login = () => {
 	};
 
 	return (
-		<StyledLogin>
+		<StyledAccount maxWidth={380}>
 			<section>
 				<section className="container">
 					<div>
@@ -212,7 +173,7 @@ const Login = () => {
 					<img src={CompassWhite} alt="Compass.uol logo" />
 				</a>
 			</section>
-		</StyledLogin>
+		</StyledAccount>
 	);
 };
 
