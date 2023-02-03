@@ -11,6 +11,7 @@
 - HTML
 - CSS
 - JavaScript
+- TypeScript
 - React.js
   - React Router
   - Styled Components
