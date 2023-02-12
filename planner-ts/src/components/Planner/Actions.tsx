@@ -1,4 +1,4 @@
-import { createRef, useContext } from "react";
+import { FormEvent, createRef, useContext } from "react";
 import styled from "styled-components";
 
 import Form from "../UI/Form";
@@ -15,25 +15,25 @@ const StyledActions = styled.section`
 `;
 
 const Actions = () => {
-	const taskRef = createRef();
-	const dayRef = createRef();
-	const timeRef = createRef();
+	const taskRef = createRef<HTMLInputElement>();
+	const dayRef = createRef<HTMLSelectElement>();
+	const timeRef = createRef<HTMLInputElement>();
 
 	const { filter } = useContext(TaskContext);
 	const { addTask, deleteAllTasks } = useContext(TaskContext);
 
-	const submitHandler = (event) => {
+	const submitHandler = (event: FormEvent) => {
 		event.preventDefault();
 
 		if (
-			dayRef.current.value.trim() !== "" &&
-			timeRef.current.value.trim() !== "" &&
-			taskRef.current.value.trim() !== ""
+			dayRef.current!.value.trim() !== "" &&
+			timeRef.current!.value.trim() !== "" &&
+			taskRef.current!.value.trim() !== ""
 		) {
 			const newTask = {
-				day: dayRef.current.value,
-				time: timeRef.current.value,
-				text: taskRef.current.value,
+				day: dayRef.current!.value,
+				time: timeRef.current!.value,
+				text: taskRef.current!.value,
 			};
 
 			addTask(newTask);

@@ -1,8 +1,12 @@
-import { useContext } from "react";
+import { HTMLAttributes, useContext } from "react";
 import styled from "styled-components";
 
 import Button from "../UI/Button";
 import { TaskContext } from "../../store/taskContext";
+
+interface ElementsProps extends HTMLAttributes<HTMLElement> {
+	day?: string;
+}
 
 const StyledSection = styled.section`
 	width: 97vw;
@@ -52,7 +56,7 @@ const StyledTime = styled.aside`
 	box-shadow: 0px 4px 24px rgba(168, 168, 168, 0.25);
 
 	color: #000;
-	background-color: var(--${({ day }) => day}-color);
+	background-color: var(--${({ day }: ElementsProps) => day}-color);
 
 	&.invalid {
 		color: #fff;
@@ -117,7 +121,7 @@ const StyledCard = styled.div`
 		height: 100%;
 		display: block;
 
-		background-color: var(--${({ day }) => day}-color);
+		background-color: var(--${({ day }: ElementsProps) => day}-color);
 	}
 
 	&.invalid::before {

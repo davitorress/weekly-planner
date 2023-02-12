@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
-const useInput = (validateFunction, type) => {
+const useInput = (validateFunction: (value: string) => boolean, type?: string) => {
 	const [enteredValue, setEnteredValue] = useState("");
 	const [isTouched, setIsTouched] = useState(false);
 
 	const valueIsValid = validateFunction(enteredValue);
 	const hasError = !valueIsValid && isTouched;
 
-	const dateHandler = (event) => {
+	const dateHandler = (event: ChangeEvent<HTMLInputElement>) => {
 		let value = event.target.value.replace(/\D/g, "");
 		value = value.replace(/(\d{2})(\d)/, "$1/$2");
 		value = value.replace(/(\d{2})(\d)/, "$1/$2");
@@ -18,7 +18,7 @@ const useInput = (validateFunction, type) => {
 		}
 	};
 
-	const valueChangeHandler = (event) => {
+	const valueChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
 		if (type === "birth-date") dateHandler(event);
 		else setEnteredValue(event.target.value);
 	};

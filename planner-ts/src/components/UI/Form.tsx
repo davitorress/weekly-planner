@@ -1,3 +1,4 @@
+import { FormHTMLAttributes } from "react";
 import styled from "styled-components";
 
 const StyledForm = styled.form`
@@ -48,7 +49,7 @@ const StyledForm = styled.form`
 	}
 `;
 
-const Form = (props) => {
+const Form = (props: FormHTMLAttributes<HTMLFormElement>) => {
 	return <StyledForm {...props}>{props.children}</StyledForm>;
 };
 

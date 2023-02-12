@@ -1,6 +1,12 @@
+import { InputHTMLAttributes } from "react";
 import styled from "styled-components";
 
 import { Icon } from "../styled";
+
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+	label?: string;
+	iconPath?: string;
+}
 
 const StyledDiv = styled.div`
 	display: grid;
@@ -19,7 +25,7 @@ const StyledInput = styled.input`
 	border-radius: 50px;
 	border: 1px solid #fff;
 
-	${({ label }) => (!label ? `grid-column: 2 span;` : "")}
+	${({ label }: InputProps) => (!label ? `grid-column: 2 span;` : "")}
 
 	&:-webkit-autofill,
 	&:-webkit-autofill:hover,
@@ -58,9 +64,9 @@ const StyledInput = styled.input`
 	}
 `;
 
-const InputGroup = (props) => {
+const InputGroup = (props: InputProps) => {
 	return (
-		<StyledDiv label={props.label}>
+		<StyledDiv>
 			{props.label && <label htmlFor={props.id}>{props.label}</label>}
 			<StyledInput {...props} label={props.label} type={props.type ? props.type : "text"} />
 			<Icon className="icon__input" iconPath={props.iconPath} />

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import CompassWhite from "../assets/compass-white.svg";
@@ -16,11 +16,11 @@ import { AuthContext } from "../store/authContext";
 const Login = () => {
 	const navigate = useNavigate();
 
-	const [errorMessage, setErrorMessage] = useState();
+	const [errorMessage, setErrorMessage] = useState(<></>);
 
 	const authCtx = useContext(AuthContext);
 
-	const userData = JSON.parse(localStorage.getItem("user"));
+	const userData = JSON.parse(localStorage.getItem("user")!);
 
 	const {
 		value: usernameValue,
@@ -50,12 +50,12 @@ const Login = () => {
 		if (usernameHasError || passwordHasError) {
 			setErrorMessage(<p className="error-message">Complete all the fields correctly!</p>);
 		} else {
-			setErrorMessage();
+			setErrorMessage(<></>);
 		}
 	}, [usernameHasError, passwordHasError]);
 
-	const submitError = (inputId, functionClass) => {
-		const input = document.getElementById(inputId);
+	const submitError = (inputId: string, functionClass: "add" | "remove") => {
+		const input = document.getElementById(inputId)!;
 
 		if (functionClass === "add") {
 			input.focus();
@@ -72,7 +72,7 @@ const Login = () => {
 		}
 	};
 
-	const submitHandler = (event) => {
+	const submitHandler = (event: FormEvent) => {
 		event.preventDefault();
 
 		if (!formIsValid) {
@@ -86,7 +86,7 @@ const Login = () => {
 			);
 			return;
 		} else {
-			setErrorMessage();
+			setErrorMessage(<></>);
 		}
 
 		if (usernameValue.trim() === userData.username || usernameValue === userData.email) {

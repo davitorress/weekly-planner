@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { FormEvent, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import CompassWhite from "../assets/compass-white.svg";
@@ -14,7 +14,7 @@ import { UserContext } from "../store/userContext";
 const Register = () => {
 	const navigate = useNavigate();
 
-	const userCtx = useContext(UserContext);
+	const { register } = useContext(UserContext);
 
 	const {
 		value: firstName,
@@ -107,7 +107,7 @@ const Register = () => {
 		confirmPasswordHasError;
 	let errorMessage = "Complete all the fields correctly!";
 
-	const submitHandler = (event) => {
+	const submitHandler = (event: FormEvent) => {
 		event.preventDefault();
 
 		if (formIsInvalid) {
@@ -125,7 +125,7 @@ const Register = () => {
 			password: passwordValue,
 		};
 
-		userCtx.register(userData);
+		register(userData);
 		localStorage.setItem("user", JSON.stringify(userData));
 
 		resetFirstName();
@@ -141,7 +141,7 @@ const Register = () => {
 	};
 
 	const loginHandler = () => {
-		const userData = JSON.parse(localStorage.getItem("user"));
+		const userData = JSON.parse(localStorage.getItem("user")!);
 
 		if (!userData) {
 			alert("There is no registered account saved. Please register an account.");

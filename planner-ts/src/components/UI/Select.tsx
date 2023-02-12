@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { ForwardedRef, SelectHTMLAttributes, forwardRef } from "react";
 import styled from "styled-components";
 
 const StyledSelect = styled.select`
@@ -19,7 +19,7 @@ const StyledSelect = styled.select`
 	}
 `;
 
-const Select = forwardRef((props, ref) => {
+const Select = forwardRef((props: SelectHTMLAttributes<HTMLSelectElement>, ref: ForwardedRef<HTMLSelectElement>) => {
 	return (
 		<StyledSelect ref={ref} {...props}>
 			{props.children}

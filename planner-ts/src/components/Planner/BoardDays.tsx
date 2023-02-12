@@ -1,7 +1,11 @@
-import { useContext } from "react";
+import { LiHTMLAttributes, useContext } from "react";
 import styled from "styled-components";
 
 import { TaskContext } from "../../store/taskContext";
+
+interface LiProps extends LiHTMLAttributes<HTMLLIElement> {
+	day: string;
+}
 
 const StyledUl = styled.ul`
 	display: flex;
@@ -21,7 +25,7 @@ const StyledLi = styled.li`
 	cursor: pointer;
 
 	border-radius: 9px 9px 0px 0px;
-	background-color: var(--${({ day }) => day}-color);
+	background-color: var(--${({ day }: LiProps) => day}-color);
 	box-shadow: 0px 4px 24px rgba(168, 168, 168, 0.25);
 
 	&.active {

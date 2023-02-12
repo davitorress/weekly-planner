@@ -1,9 +1,15 @@
+import { ButtonHTMLAttributes } from "react";
 import styled from "styled-components";
+
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+	fontWeight?: number;
+	fontSize?: string;
+}
 
 const StyledButton = styled.button`
 	color: #fff;
-	font-weight: ${({ fontWeight }) => (fontWeight ? fontWeight : 700)};
-	font-size: ${({ fontSize }) => (fontSize ? fontSize : "")};
+	font-weight: ${({ fontWeight }: ButtonProps) => (fontWeight ? fontWeight : 700)};
+	font-size: ${({ fontSize }: ButtonProps) => (fontSize ? fontSize : "")};
 	font-family: "Mulish", sans-serif;
 	cursor: pointer;
 
@@ -59,7 +65,7 @@ const StyledButton = styled.button`
 	}
 `;
 
-const Button = (props) => {
+const Button = (props: ButtonProps) => {
 	return (
 		<StyledButton {...props} type={props.type ? props.type : "button"}>
 			{props.children}

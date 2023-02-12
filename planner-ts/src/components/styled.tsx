@@ -13,7 +13,7 @@ export const StyledAccount = styled.main`
 
 	.container {
 		margin: 0 auto;
-		max-width: ${({ maxWidth }) => maxWidth}px;
+		max-width: ${({ maxWidth }: { maxWidth: number }) => maxWidth}px;
 
 		display: grid;
 		row-gap: 5rem;
@@ -45,7 +45,7 @@ export const Icon = styled.i`
 
 	background-position: center;
 	background-repeat: no-repeat;
-	background-image: url(${({ iconPath }) => iconPath});
+	background-image: url(${({ iconPath }: { iconPath?: string }) => iconPath});
 
 	&.icon__input {
 		right: 0;

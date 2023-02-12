@@ -12,6 +12,16 @@ import { Icon } from "../styled";
 import { AuthContext } from "../../store/authContext";
 import { UserContext } from "../../store/userContext";
 
+interface WeatherProps {
+	location: {
+		name: string;
+		country: string;
+	};
+	current: {
+		temp_c: number;
+	};
+}
+
 const StyledHeader = styled.header`
 	display: grid;
 	align-items: center;
@@ -90,9 +100,9 @@ const Header = () => {
 	const navigate = useNavigate();
 
 	const authCtx = useContext(AuthContext);
-	const { city } = useContext(UserContext);
+	const { user } = useContext(UserContext);
 
-	const [weather, setWeather] = useState();
+	const [weather, setWeather] = useState<WeatherProps>();
 	const [isLoading, setIsLoading] = useState(true);
 	const [weatherError, setWeatherError] = useState("");
 
@@ -120,7 +130,7 @@ const Header = () => {
 		};
 	}, []);
 
-	const weatherHandler = (city) => {
+	const weatherHandler = (city: string) => {
 		fetch(`http://api.weatherapi.com/v1/current.json?key=${import.meta.env.VITE_APP_WEATHER_API_KEY}&q=${city}&lang=en`)
 			.then((res) => {
 				if (res.ok) return res.json();
@@ -129,7 +139,6 @@ const Header = () => {
 					setWeatherError("Location not found!");
 				}
 			})
-
 			.then((data) => {
 				setWeather(data);
 				setIsLoading(false);
@@ -137,7 +146,7 @@ const Header = () => {
 	};
 
 	useEffect(() => {
-		weatherHandler(city);
+		weatherHandler(user.city);
 
 		return () => {};
 	}, []);
@@ -177,11 +186,11 @@ const Header = () => {
 						) : (
 							<>
 								<p>
-									{weather.location.name} - {weather.location.country}
+									{weather!.location.name} - {weather!.location.country}
 								</p>
 								<h2>
 									<img src={Cloud} alt="cloud" />
-									{weather.current.temp_c}°
+									{weather!.current.temp_c}°
 								</h2>
 							</>
 						)}

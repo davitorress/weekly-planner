@@ -7,7 +7,7 @@ import { AuthProvider } from "./store/authContext";
 import { UserProvider } from "./store/userContext";
 import { TaskProvider } from "./store/taskContext";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
 		<AuthProvider>
 			<UserProvider>
