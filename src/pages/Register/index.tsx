@@ -1,4 +1,4 @@
-import { FormEvent, useContext } from "react";
+import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import CompassWhite from "../../assets/compass-white.svg";
@@ -9,12 +9,10 @@ import Button from "../../components/UI/Button";
 import { StyledAccount } from "../../components/Styled";
 
 import useInput from "../../hooks/useInput";
-import { UserContext } from "../../store/userContext";
 
 const Register = () => {
 	const navigate = useNavigate();
-
-	const { register } = useContext(UserContext);
+	const [errorMessage, setErrorMessage] = useState("");
 
 	const {
 		value: firstName,
@@ -23,7 +21,7 @@ const Register = () => {
 		inputFocusHandler: firstNameFocus,
 		reset: resetFirstName,
 	} = useInput((value) => {
-		return value.trim().length > 2;
+		return value.trim().length >= 3;
 	});
 
 	const {
@@ -33,7 +31,7 @@ const Register = () => {
 		inputFocusHandler: lastNameFocus,
 		reset: resetLastName,
 	} = useInput((value) => {
-		return value.trim().length > 2;
+		return value.trim().length >= 5;
 	});
 
 	const {
@@ -105,28 +103,53 @@ const Register = () => {
 		emailHasError ||
 		passwordHasError ||
 		confirmPasswordHasError;
-	let errorMessage = "Complete all the fields correctly!";
 
 	const submitHandler = (event: FormEvent) => {
 		event.preventDefault();
 
 		if (formIsInvalid) {
+			setErrorMessage("Complete all the fields correctly!");
 			return;
+		} else {
+			setErrorMessage("");
 		}
+
+		const dateSplit = birthDate.split("/");
 
 		const userData = {
 			firstName,
 			lastName,
-			username: firstName + " " + lastName,
-			birthDate,
+			birthDate: `${dateSplit[2]}-${dateSplit[1]}-${dateSplit[0]}`,
 			country: countryValue,
 			city: cityValue,
 			email: emailValue,
 			password: passwordValue,
+			confirmPassword: confirmPasswordValue,
 		};
 
-		register(userData);
-		localStorage.setItem("user", JSON.stringify(userData));
+		fetch("https://latam-challenge-2.deta.dev/api/v1/users/sign-up", {
+			method: "post",
+			body: JSON.stringify(userData),
+			mode: "cors",
+			cache: "default",
+			headers: {
+				accept: "*/*",
+				"Content-Type": "application/json; charset=UTF-8",
+			},
+		})
+			.then((res) => {
+				console.log(res);
+				// if (res.ok) {
+				// 	console.log(res.json());
+				// 	// return res.json();
+				// }
+			})
+			.catch((err) => {
+				console.log(err);
+				// return;
+			});
+
+		return;
 
 		resetFirstName();
 		resetLastName();
@@ -247,7 +270,7 @@ const Register = () => {
 								onFocus={confirmPasswordFocus}
 							/>
 
-							{formIsInvalid && <p className="error-message">{errorMessage}</p>}
+							{errorMessage && <p className="error-message">{errorMessage}</p>}
 							{!passwordHasError && !confirmPasswordHasError && !(passwordValue === confirmPasswordValue) && (
 								<p className="error-message">Passwords do not match!</p>
 							)}
