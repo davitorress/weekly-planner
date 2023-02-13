@@ -23,6 +23,7 @@ const StyledLi = styled.li`
 	font-size: 2rem;
 
 	cursor: pointer;
+	transition: all 0.5s ease-in;
 
 	border-radius: 9px 9px 0px 0px;
 	background-color: var(--${({ day }: LiProps) => day}-color);
