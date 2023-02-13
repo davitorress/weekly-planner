@@ -1,5 +1,6 @@
 import { FormEvent, createRef, useContext } from "react";
-import styled from "styled-components";
+
+import { StyledActions } from "./styles";
 
 import Form from "../../UI/Form";
 import Input from "../../UI/Input";
@@ -7,12 +8,6 @@ import Button from "../../UI/Button";
 import Select from "../../UI/Select";
 
 import { TaskContext } from "../../../store/taskContext";
-
-const StyledActions = styled.section`
-	width: 100%;
-	display: flex;
-	padding: 30px 0;
-`;
 
 const Actions = () => {
 	const taskRef = createRef<HTMLInputElement>();
