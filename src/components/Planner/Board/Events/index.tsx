@@ -1,8 +1,8 @@
 import { HTMLAttributes, useContext } from "react";
 import styled from "styled-components";
 
-import Button from "../UI/Button";
-import { TaskContext } from "../../store/taskContext";
+import Button from "../../../UI/Button";
+import { TaskContext } from "../../../../store/taskContext";
 
 interface ElementsProps extends HTMLAttributes<HTMLElement> {
 	day?: string;

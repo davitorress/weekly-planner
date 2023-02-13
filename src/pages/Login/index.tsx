@@ -1,17 +1,17 @@
 import { FormEvent, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import CompassWhite from "../assets/compass-white.svg";
-import UserIcon from "../assets/icon-user.svg";
-import LockIcon from "../assets/icon-password.svg";
+import CompassWhite from "../../assets/compass-white.svg";
+import UserIcon from "../../assets/icon-user.svg";
+import LockIcon from "../../assets/icon-password.svg";
 
-import Form from "../components/UI/Form";
-import InputGroup from "../components/UI/InputGroup";
-import Button from "../components/UI/Button";
-import { StyledAccount } from "../components/styled";
+import Form from "../../components/UI/Form";
+import InputGroup from "../../components/UI/InputGroup";
+import Button from "../../components/UI/Button";
+import { StyledAccount } from "../../components/Styled";
 
-import useInput from "../hooks/useInput";
-import { AuthContext } from "../store/authContext";
+import useInput from "../../hooks/useInput";
+import { AuthContext } from "../../store/authContext";
 
 const Login = () => {
 	const navigate = useNavigate();

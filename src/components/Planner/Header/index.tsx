@@ -2,15 +2,15 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import Cloud from "../../assets/cloud.svg";
-import CompassBlack from "../../assets/compass-black.svg";
-import Arrow from "../../assets/arrow-right-north.svg";
+import Cloud from "../../../assets/cloud.svg";
+import CompassBlack from "../../../assets/compass-black.svg";
+import Arrow from "../../../assets/arrow-right-north.svg";
 
-import Button from "../UI/Button";
-import { Icon } from "../styled";
+import Button from "../../UI/Button";
+import { Icon } from "../../Styled";
 
-import { AuthContext } from "../../store/authContext";
-import { UserContext } from "../../store/userContext";
+import { AuthContext } from "../../../store/authContext";
+import { UserContext } from "../../../store/userContext";
 
 interface WeatherProps {
 	location: {

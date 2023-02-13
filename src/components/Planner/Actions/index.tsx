@@ -1,12 +1,12 @@
 import { FormEvent, createRef, useContext } from "react";
 import styled from "styled-components";
 
-import Form from "../UI/Form";
-import Input from "../UI/Input";
-import Button from "../UI/Button";
-import Select from "../UI/Select";
+import Form from "../../UI/Form";
+import Input from "../../UI/Input";
+import Button from "../../UI/Button";
+import Select from "../../UI/Select";
 
-import { TaskContext } from "../../store/taskContext";
+import { TaskContext } from "../../../store/taskContext";
 
 const StyledActions = styled.section`
 	width: 100%;

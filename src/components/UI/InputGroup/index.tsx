@@ -1,7 +1,7 @@
 import { InputHTMLAttributes } from "react";
 import styled from "styled-components";
 
-import { Icon } from "../styled";
+import { Icon } from "../../Styled";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 	label?: string;

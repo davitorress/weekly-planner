@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-import CompassBackground from "../assets/logo-background.svg";
+import CompassBackground from "../../assets/logo-background.svg";
 
-import Header from "../components/Planner/Header";
-import Actions from "../components/Planner/Actions";
-import Board from "../components/Planner/Board";
+import Header from "../../components/Planner/Header";
+import Actions from "../../components/Planner/Actions";
+import Board from "../../components/Planner/Board";
 
 const StyledDashboard = styled.main`
 	display: grid;

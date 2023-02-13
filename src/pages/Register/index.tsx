@@ -1,15 +1,15 @@
 import { FormEvent, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-import CompassWhite from "../assets/compass-white.svg";
+import CompassWhite from "../../assets/compass-white.svg";
 
-import Form from "../components/UI/Form";
-import InputGroup from "../components/UI/InputGroup";
-import Button from "../components/UI/Button";
-import { StyledAccount } from "../components/styled";
+import Form from "../../components/UI/Form";
+import InputGroup from "../../components/UI/InputGroup";
+import Button from "../../components/UI/Button";
+import { StyledAccount } from "../../components/Styled";
 
-import useInput from "../hooks/useInput";
-import { UserContext } from "../store/userContext";
+import useInput from "../../hooks/useInput";
+import { UserContext } from "../../store/userContext";
 
 const Register = () => {
 	const navigate = useNavigate();

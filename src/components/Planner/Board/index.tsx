@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-import BoardDays from "./BoardDays";
-import BoardTasks from "./BoardTasks";
+import BoardDays from "./Days";
+import BoardTasks from "./Events";
 
 const StyledBoard = styled.section`
 	padding-top: 20px;

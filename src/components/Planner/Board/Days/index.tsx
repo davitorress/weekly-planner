@@ -1,7 +1,7 @@
 import { LiHTMLAttributes, useContext } from "react";
 import styled from "styled-components";
 
-import { TaskContext } from "../../store/taskContext";
+import { TaskContext } from "../../../../store/taskContext";
 
 interface LiProps extends LiHTMLAttributes<HTMLLIElement> {
 	day: string;
