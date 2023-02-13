@@ -131,7 +131,7 @@ const Header = () => {
 	}, []);
 
 	const weatherHandler = (city: string) => {
-		fetch(`http://api.weatherapi.com/v1/current.json?key=${import.meta.env.VITE_APP_WEATHER_API_KEY}&q=${city}&lang=en`)
+		fetch(`http://api.weatherapi.com/v1/current.json?key=ccbce4371b3c4f7b8c8142923232001&q=${city}&lang=en`)
 			.then((res) => {
 				if (res.ok) return res.json();
 				else {
