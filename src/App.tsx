@@ -5,19 +5,19 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 
-import { AuthContext } from "./store/authContext";
+import { UserContext } from "./store/userContext";
 
 import "./App.css";
 
 function App() {
-	const { isLogged } = useContext(AuthContext);
+	const { user } = useContext(UserContext);
 
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route path="/" element={isLogged ? <Dashboard /> : <Navigate to="/register" />} />
-				<Route path="/register" element={isLogged ? <Navigate to="/" /> : <Register />} />
-				<Route path="/login" element={isLogged ? <Navigate to="/" /> : <Login />} />
+				<Route path="/" element={user.id ? <Dashboard /> : <Navigate to="/register" />} />
+				<Route path="/register" element={user.id ? <Navigate to="/" /> : <Register />} />
+				<Route path="/login" element={user.id ? <Navigate to="/" /> : <Login />} />
 			</Routes>
 		</BrowserRouter>
 	);
