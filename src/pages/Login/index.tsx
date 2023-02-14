@@ -11,16 +11,13 @@ import Button from "../../components/UI/Button";
 import { StyledAccount } from "../../components/Styled";
 
 import useInput from "../../hooks/useInput";
-import { AuthContext } from "../../store/authContext";
+import { UserContext } from "../../store/userContext";
 
 const Login = () => {
 	const navigate = useNavigate();
+	const { saveInfo } = useContext(UserContext);
 
-	const [errorMessage, setErrorMessage] = useState(<></>);
-
-	const authCtx = useContext(AuthContext);
-
-	const userData = JSON.parse(localStorage.getItem("user")!);
+	const [errorMessage, setErrorMessage] = useState<JSX.Element | string>(<></>);
 
 	const {
 		value: usernameValue,
@@ -48,28 +45,38 @@ const Login = () => {
 
 	useEffect(() => {
 		if (usernameHasError || passwordHasError) {
-			setErrorMessage(<p className="error-message">Complete all the fields correctly!</p>);
+			setErrorMessage("Complete all the fields correctly!");
 		} else {
-			setErrorMessage(<></>);
+			setErrorMessage("");
 		}
 	}, [usernameHasError, passwordHasError]);
 
-	const submitError = (inputId: string, functionClass: "add" | "remove") => {
-		const input = document.getElementById(inputId)!;
-
-		if (functionClass === "add") {
-			input.focus();
-			input.classList.add("invalid");
-			setErrorMessage(
-				<p className="error-message">
-					Wow, invalid username or password.
-					<br />
-					Please, try again!
-				</p>
-			);
-		} else {
-			input.classList.remove("invalid");
-		}
+	const loginUser = (user: {}) => {
+		fetch("https://latam-challenge-2.deta.dev/api/v1/users/sign-in", {
+			method: "POST",
+			body: JSON.stringify(user),
+			headers: {
+				"Content-Type": "application/json; charset=UTF-8",
+			},
+		})
+			.then((res) => {
+				return res.json();
+			})
+			.then((data) => {
+				if (typeof data === "object") {
+					if (data.message) {
+						setErrorMessage(data.message);
+					} else {
+						saveInfo({
+							id: data.user._id,
+							country: data.user.country,
+							city: data.user.city,
+						});
+					}
+				} else {
+					setErrorMessage(data);
+				}
+			});
 	};
 
 	const submitHandler = (event: FormEvent) => {
@@ -78,40 +85,29 @@ const Login = () => {
 		if (!formIsValid) {
 			[...document.querySelectorAll("input")].map((input) => input.classList.add("invalid"));
 			setErrorMessage(
-				<p className="error-message">
+				<>
 					Wow, invalid username or password.
 					<br />
 					Please, try again!
-				</p>
+				</>
 			);
 			return;
 		} else {
-			setErrorMessage(<></>);
+			setErrorMessage("");
 		}
 
-		if (usernameValue.trim() === userData.username || usernameValue === userData.email) {
-			submitError("username", "remove");
-		} else {
-			submitError("username", "add");
-			return;
-		}
+		const userData = {
+			email: usernameValue,
+			password: passwordValue,
+		};
 
-		if (passwordValue === userData.password) {
-			submitError("password", "remove");
-		} else {
-			submitError("password", "add");
-			return;
-		}
+		loginUser(userData);
 
 		resetUsername();
 		resetPassword();
-
-		authCtx.login();
-		navigate("/");
 	};
 
 	const registerHandler = () => {
-		authCtx.logout();
 		navigate("/register");
 	};
 
@@ -150,7 +146,7 @@ const Login = () => {
 								onFocus={passwordFocus}
 							/>
 
-							{errorMessage}
+							{errorMessage && <p className="error-message">{errorMessage}</p>}
 						</section>
 
 						<section>

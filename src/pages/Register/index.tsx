@@ -9,10 +9,13 @@ import Button from "../../components/UI/Button";
 import { StyledAccount } from "../../components/Styled";
 
 import useInput from "../../hooks/useInput";
+import Modal from "../../components/UI/Modal";
 
 const Register = () => {
 	const navigate = useNavigate();
 	const [errorMessage, setErrorMessage] = useState("");
+	const [showModal, setShowModal] = useState(false);
+	const [modalContent, setModalContent] = useState(<></>);
 
 	const {
 		value: firstName,
@@ -104,6 +107,31 @@ const Register = () => {
 		passwordHasError ||
 		confirmPasswordHasError;
 
+	const registerUser = (user: {}) => {
+		fetch("https://latam-challenge-2.deta.dev/api/v1/users/sign-up", {
+			method: "POST",
+			body: JSON.stringify(user),
+			headers: {
+				"Content-Type": "application/json; charset=UTF-8",
+			},
+		})
+			.then((res) => {
+				return res.json();
+			})
+			.then((data) => {
+				if (typeof data === "object") {
+					if (data.message) {
+						setErrorMessage(data.message);
+					}
+
+					setShowModal(true);
+					setModalContent(<p>User created with success!</p>);
+				} else {
+					setErrorMessage(data);
+				}
+			});
+	};
+
 	const submitHandler = (event: FormEvent) => {
 		event.preventDefault();
 
@@ -127,29 +155,9 @@ const Register = () => {
 			confirmPassword: confirmPasswordValue,
 		};
 
-		fetch("https://latam-challenge-2.deta.dev/api/v1/users/sign-up", {
-			method: "post",
-			body: JSON.stringify(userData),
-			mode: "cors",
-			cache: "default",
-			headers: {
-				accept: "*/*",
-				"Content-Type": "application/json; charset=UTF-8",
-			},
-		})
-			.then((res) => {
-				console.log(res);
-				// if (res.ok) {
-				// 	console.log(res.json());
-				// 	// return res.json();
-				// }
-			})
-			.catch((err) => {
-				console.log(err);
-				// return;
-			});
-
-		return;
+		// registerUser(userData);
+		setShowModal(true);
+		setModalContent(<p>User created with success!</p>);
 
 		resetFirstName();
 		resetLastName();
@@ -159,144 +167,144 @@ const Register = () => {
 		resetEmail();
 		resetPassword();
 		resetConfirmPassword();
-
-		navigate("/login");
 	};
 
 	const loginHandler = () => {
-		const userData = JSON.parse(localStorage.getItem("user")!);
+		navigate("/login");
+	};
 
-		if (!userData) {
-			alert("There is no registered account saved. Please register an account.");
-			return;
-		}
-
+	const closeModalHandler = () => {
+		setShowModal(false);
+		setModalContent(<></>);
 		navigate("/login");
 	};
 
 	return (
-		<StyledAccount maxWidth={480}>
-			<section>
-				<section className="container">
-					<div>
-						<h1>Welcome,</h1>
-						<p>Please, register to continue</p>
-					</div>
+		<>
+			{showModal && <Modal onClose={closeModalHandler}>{modalContent}</Modal>}
+			<StyledAccount maxWidth={480}>
+				<section>
+					<section className="container">
+						<div>
+							<h1>Welcome,</h1>
+							<p>Please, register to continue</p>
+						</div>
 
-					<Form onSubmit={submitHandler} className="form__account">
-						<section className="form__inputs">
-							<InputGroup
-								label="first name"
-								name="first-name"
-								id="first-name"
-								placeholder="Your first name"
-								className={`input__account ${firstNameHasError ? "invalid" : ""}`}
-								value={firstName}
-								onChange={firstNameChange}
-								onFocus={firstNameFocus}
-							/>
-							<InputGroup
-								label="last name"
-								name="last-name"
-								id="last-name"
-								placeholder="Your last name"
-								className={`input__account ${lastNameHasError ? "invalid" : ""}`}
-								value={lastName}
-								onChange={lastNameChange}
-								onFocus={lastNameFocus}
-							/>
-							<InputGroup
-								label="birth date"
-								type="birth-date"
-								name="birth-date"
-								id="birth-date"
-								placeholder="MM/DD/YYYY"
-								className={`input__account ${birthDateHasError ? "invalid" : ""}`}
-								value={birthDate}
-								onChange={birthDateChange}
-								onFocus={birthDateFocus}
-							/>
-							<InputGroup
-								label="Country"
-								name="country"
-								id="country"
-								placeholder="Your Country"
-								className={`input__account ${countryHasError ? "invalid" : ""}`}
-								value={countryValue}
-								onChange={countryChange}
-								onFocus={countryFocus}
-							/>
-							<InputGroup
-								label="City"
-								name="city"
-								id="city"
-								placeholder="Your City"
-								className={`input__account ${cityHasError ? "invalid" : ""}`}
-								value={cityValue}
-								onChange={cityChange}
-								onFocus={cityFocus}
-							/>
-							<InputGroup
-								label="email"
-								type="email"
-								name="email"
-								id="email"
-								placeholder="A valid e-mail here"
-								className={`input__account ${emailHasError ? "invalid" : ""}`}
-								value={emailValue}
-								onChange={emailChange}
-								onFocus={emailFocus}
-							/>
-							<InputGroup
-								label="password"
-								type="password"
-								name="password"
-								id="password"
-								placeholder="Your password"
-								className={`input__account ${passwordHasError ? "invalid" : ""}`}
-								value={passwordValue}
-								onChange={passwordChange}
-								onFocus={passwordFocus}
-							/>
-							<InputGroup
-								label="password"
-								type="password"
-								name="confirm-password"
-								id="confirm-password"
-								placeholder="Confirm your password"
-								className={`input__account ${confirmPasswordHasError ? "invalid" : ""}`}
-								value={confirmPasswordValue}
-								onChange={confirmPasswordChange}
-								onFocus={confirmPasswordFocus}
-							/>
+						<Form onSubmit={submitHandler} className="form__account">
+							<section className="form__inputs">
+								<InputGroup
+									label="first name"
+									name="first-name"
+									id="first-name"
+									placeholder="Your first name"
+									className={`input__account ${firstNameHasError ? "invalid" : ""}`}
+									value={firstName}
+									onChange={firstNameChange}
+									onFocus={firstNameFocus}
+								/>
+								<InputGroup
+									label="last name"
+									name="last-name"
+									id="last-name"
+									placeholder="Your last name"
+									className={`input__account ${lastNameHasError ? "invalid" : ""}`}
+									value={lastName}
+									onChange={lastNameChange}
+									onFocus={lastNameFocus}
+								/>
+								<InputGroup
+									label="birth date"
+									type="birth-date"
+									name="birth-date"
+									id="birth-date"
+									placeholder="MM/DD/YYYY"
+									className={`input__account ${birthDateHasError ? "invalid" : ""}`}
+									value={birthDate}
+									onChange={birthDateChange}
+									onFocus={birthDateFocus}
+								/>
+								<InputGroup
+									label="Country"
+									name="country"
+									id="country"
+									placeholder="Your Country"
+									className={`input__account ${countryHasError ? "invalid" : ""}`}
+									value={countryValue}
+									onChange={countryChange}
+									onFocus={countryFocus}
+								/>
+								<InputGroup
+									label="City"
+									name="city"
+									id="city"
+									placeholder="Your City"
+									className={`input__account ${cityHasError ? "invalid" : ""}`}
+									value={cityValue}
+									onChange={cityChange}
+									onFocus={cityFocus}
+								/>
+								<InputGroup
+									label="email"
+									type="email"
+									name="email"
+									id="email"
+									placeholder="A valid e-mail here"
+									className={`input__account ${emailHasError ? "invalid" : ""}`}
+									value={emailValue}
+									onChange={emailChange}
+									onFocus={emailFocus}
+								/>
+								<InputGroup
+									label="password"
+									type="password"
+									name="password"
+									id="password"
+									placeholder="Your password"
+									className={`input__account ${passwordHasError ? "invalid" : ""}`}
+									value={passwordValue}
+									onChange={passwordChange}
+									onFocus={passwordFocus}
+								/>
+								<InputGroup
+									label="password"
+									type="password"
+									name="confirm-password"
+									id="confirm-password"
+									placeholder="Confirm your password"
+									className={`input__account ${confirmPasswordHasError ? "invalid" : ""}`}
+									value={confirmPasswordValue}
+									onChange={confirmPasswordChange}
+									onFocus={confirmPasswordFocus}
+								/>
 
-							{errorMessage && <p className="error-message">{errorMessage}</p>}
-							{!passwordHasError && !confirmPasswordHasError && !(passwordValue === confirmPasswordValue) && (
-								<p className="error-message">Passwords do not match!</p>
-							)}
-						</section>
+								{errorMessage && <p className="error-message">{errorMessage}</p>}
+								{!passwordHasError && !confirmPasswordHasError && !(passwordValue === confirmPasswordValue) && (
+									<p className="error-message">Passwords do not match!</p>
+								)}
+							</section>
 
-						<section>
-							<Button type="submit" className="button__form" fontSize="3.2rem">
-								Register Now
-							</Button>
-							<div className="form__link">
-								<p>Already have an account?</p>
-								<Button type="reset" className="button__link" onClick={loginHandler}>
-									Log in
+							<section>
+								<Button type="submit" className="button__form" fontSize="3.2rem">
+									Register Now
 								</Button>
-							</div>
-						</section>
-					</Form>
+								<div className="form__link">
+									<p>Already have an account?</p>
+									<Button type="reset" className="button__link" onClick={loginHandler}>
+										Log in
+									</Button>
+								</div>
+							</section>
+						</Form>
+					</section>
 				</section>
-			</section>
 
-			<section className="background-img">
-				<a href="https://compass.uol/en/home/" target="_blank">
-					<img src={CompassWhite} alt="Compass.uol logo" />
-				</a>
-			</section>
-		</StyledAccount>
+				<section className="background-img">
+					<a href="https://compass.uol/en/home/" target="_blank">
+						<img src={CompassWhite} alt="Compass.uol logo" />
+					</a>
+				</section>
+			</StyledAccount>
+		</>
 	);
 };
 
