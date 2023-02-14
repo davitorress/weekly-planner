@@ -9,13 +9,11 @@ import Button from "../../components/UI/Button";
 import { StyledAccount } from "../../components/Styled";
 
 import useInput from "../../hooks/useInput";
-import Modal from "../../components/UI/Modal";
+import notify from "../../utils/toastNotify";
 
 const Register = () => {
 	const navigate = useNavigate();
 	const [errorMessage, setErrorMessage] = useState("");
-	const [showModal, setShowModal] = useState(false);
-	const [modalContent, setModalContent] = useState(<></>);
 
 	const {
 		value: firstName,
@@ -97,7 +95,7 @@ const Register = () => {
 		return value.trim().length >= 6;
 	});
 
-	let formIsInvalid =
+	let formIsValid =
 		firstNameHasError ||
 		lastNameHasError ||
 		birthDateHasError ||
@@ -121,12 +119,16 @@ const Register = () => {
 			.then((data) => {
 				if (typeof data === "object") {
 					if (data.message) {
+						notify("error", data.message);
 						setErrorMessage(data.message);
+					} else {
+						notify("success", "User created with success!");
+						setTimeout(() => {
+							navigate("/login");
+						}, 2000);
 					}
-
-					setShowModal(true);
-					setModalContent(<p>User created with success!</p>);
 				} else {
+					notify("error", data);
 					setErrorMessage(data);
 				}
 			});
@@ -135,7 +137,8 @@ const Register = () => {
 	const submitHandler = (event: FormEvent) => {
 		event.preventDefault();
 
-		if (formIsInvalid) {
+		if (!formIsValid) {
+			notify("error", "Complete all the fields correctly!");
 			setErrorMessage("Complete all the fields correctly!");
 			return;
 		} else {
@@ -171,15 +174,8 @@ const Register = () => {
 		navigate("/login");
 	};
 
-	const closeModalHandler = () => {
-		setShowModal(false);
-		setModalContent(<></>);
-		navigate("/login");
-	};
-
 	return (
 		<>
-			{showModal && <Modal onClose={closeModalHandler}>{modalContent}</Modal>}
 			<StyledAccount maxWidth={480}>
 				<section>
 					<section className="container">
