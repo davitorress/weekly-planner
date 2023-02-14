@@ -155,9 +155,7 @@ const Register = () => {
 			confirmPassword: confirmPasswordValue,
 		};
 
-		// registerUser(userData);
-		setShowModal(true);
-		setModalContent(<p>User created with success!</p>);
+		registerUser(userData);
 
 		resetFirstName();
 		resetLastName();
