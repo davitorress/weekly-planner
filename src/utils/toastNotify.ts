@@ -12,6 +12,11 @@ const notify = (alertType: ToastType, alertMessage: string) => {
 		draggable: true,
 		progress: undefined,
 		theme: "colored",
+		style: {
+			fontWeight: 600,
+			fontSize: "1.4rem",
+			fontFamily: "Mulish",
+		},
 	});
 };
 
