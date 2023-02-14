@@ -18,5 +18,5 @@ export interface TaskContextInterface {
 
 export interface UserContextInterface {
 	user: UserData;
-	register: (user: UserData) => void;
+	saveInfo: (user: UserData) => void;
 }

@@ -12,12 +12,6 @@ export type NewTaskData = {
 };
 
 export type UserData = {
-	firstName: string;
-	lastName: string;
-	username: string;
-	birthDate: string;
-	country: string;
+	id: string;
 	city: string;
-	email: string;
-	password: string;
 };
