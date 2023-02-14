@@ -19,4 +19,5 @@ export interface TaskContextInterface {
 export interface UserContextInterface {
 	user: UserData;
 	saveInfo: (user: UserData) => void;
+	clearInfo: () => void;
 }

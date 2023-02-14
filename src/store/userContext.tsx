@@ -11,6 +11,7 @@ const defaultUser: UserContextInterface = userData
 				...userData,
 			},
 			saveInfo: (user: UserData) => {},
+			clearInfo: () => {},
 	  }
 	: {
 			user: {
@@ -18,6 +19,7 @@ const defaultUser: UserContextInterface = userData
 				city: "",
 			},
 			saveInfo: (user: UserData) => {},
+			clearInfo: () => {},
 	  };
 
 export const UserContext = createContext(defaultUser);
@@ -32,9 +34,18 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		});
 	};
 
+	const clearInfo = () => {
+		localStorage.removeItem("user");
+		setUserState({
+			id: "",
+			city: "",
+		});
+	};
+
 	const ctx = {
 		user: userState,
 		saveInfo,
+		clearInfo,
 	};
 
 	return <UserContext.Provider value={ctx}>{children}</UserContext.Provider>;
