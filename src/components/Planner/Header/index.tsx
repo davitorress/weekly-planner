@@ -10,7 +10,7 @@ import Arrow from "../../../assets/arrow-right-north.svg";
 import Button from "../../UI/Button";
 import { Icon } from "../../Styled";
 
-import { AuthContext } from "../../../store/authContext";
+import notify from "../../../utils/toastNotify";
 import { UserContext } from "../../../store/userContext";
 
 interface WeatherProps {
@@ -26,8 +26,7 @@ interface WeatherProps {
 const Header = () => {
 	const navigate = useNavigate();
 
-	const authCtx = useContext(AuthContext);
-	const { user } = useContext(UserContext);
+	const { user, clearInfo } = useContext(UserContext);
 
 	const [weather, setWeather] = useState<WeatherProps>();
 	const [isLoading, setIsLoading] = useState(true);
@@ -62,7 +61,7 @@ const Header = () => {
 			.then((res) => {
 				if (res.ok) return res.json();
 				else {
-					console.log(res);
+					notify("error", "Location not found!");
 					setWeatherError("Location not found!");
 				}
 			})
@@ -79,7 +78,7 @@ const Header = () => {
 	}, []);
 
 	const logoutHandler = () => {
-		authCtx.logout();
+		clearInfo();
 		navigate("/login");
 	};
 
