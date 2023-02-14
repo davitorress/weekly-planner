@@ -11,6 +11,7 @@ import Button from "../../components/UI/Button";
 import { StyledAccount } from "../../components/Styled";
 
 import useInput from "../../hooks/useInput";
+import notify from "../../utils/toastNotify";
 import { UserContext } from "../../store/userContext";
 
 const Login = () => {
@@ -65,15 +66,17 @@ const Login = () => {
 			.then((data) => {
 				if (typeof data === "object") {
 					if (data.message) {
+						notify("error", data.message);
 						setErrorMessage(data.message);
 					} else {
+						notify("success", `Welcome, ${data.user.firstName}!`);
 						saveInfo({
 							id: data.user._id,
-							country: data.user.country,
 							city: data.user.city,
 						});
 					}
 				} else {
+					notify("error", data);
 					setErrorMessage(data);
 				}
 			});
@@ -84,6 +87,7 @@ const Login = () => {
 
 		if (!formIsValid) {
 			[...document.querySelectorAll("input")].map((input) => input.classList.add("invalid"));
+			notify("warning", "Complete all the fields correctly!");
 			setErrorMessage(
 				<>
 					Wow, invalid username or password.
