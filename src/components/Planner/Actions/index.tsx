@@ -7,31 +7,53 @@ import Input from "../../UI/Input";
 import Button from "../../UI/Button";
 import Select from "../../UI/Select";
 
-import { TaskContext } from "../../../store/taskContext";
+import notify from "../../../utils/toastNotify";
+import getEvents from "../../../utils/getEvents";
+
+import { UserContext } from "../../../store/userContext";
+import { EventContext } from "../../../store/eventContext";
 
 const Actions = () => {
 	const taskRef = createRef<HTMLInputElement>();
 	const dayRef = createRef<HTMLSelectElement>();
 	const timeRef = createRef<HTMLInputElement>();
 
-	const { filter } = useContext(TaskContext);
-	const { addTask, deleteAllTasks } = useContext(TaskContext);
+	const { user } = useContext(UserContext);
+	const { addEvent } = useContext(EventContext);
+
+	const createEvent = (event: {}) => {
+		fetch("https://latam-challenge-2.deta.dev/api/v1/events", {
+			method: "POST",
+			body: JSON.stringify(event),
+			headers: {
+				"Content-Type": "application/json; charset=UTF-8",
+				Authorization: `Bearer ${user.token}`,
+			},
+		})
+			.then((res) => {
+				return res.json();
+			})
+			.then((data) => {
+				if (data.message) notify("error", data.message);
+				else {
+					notify("success", "Event created with success!");
+					getEvents(data.events.dayOfWeek, user.token, addEvent);
+				}
+			});
+	};
 
 	const submitHandler = (event: FormEvent) => {
 		event.preventDefault();
 
-		if (
-			dayRef.current!.value.trim() !== "" &&
-			timeRef.current!.value.trim() !== "" &&
-			taskRef.current!.value.trim() !== ""
-		) {
-			const newTask = {
-				day: dayRef.current!.value,
-				time: timeRef.current!.value,
-				text: taskRef.current!.value,
+		if (dayRef.current!.value.trim() !== "" && taskRef.current!.value.trim() !== "") {
+			const newEvent = {
+				dayOfWeek: dayRef.current!.value,
+				description: taskRef.current!.value,
 			};
 
-			addTask(newTask);
+			createEvent(newEvent);
+		} else {
+			notify("warning", "Complete all the fields correctly!");
 		}
 	};
 
@@ -62,7 +84,7 @@ const Actions = () => {
 					<Button type="submit" className="button__action add" fontSize="2rem">
 						+ Add to calendar
 					</Button>
-					<Button type="reset" className="button__action remove" onClick={() => deleteAllTasks(filter)} fontSize="2rem">
+					<Button type="reset" className="button__action remove" fontSize="2rem">
 						&minus; Delete All
 					</Button>
 				</section>
