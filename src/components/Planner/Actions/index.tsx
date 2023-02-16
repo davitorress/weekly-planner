@@ -12,16 +12,17 @@ import getEvents from "../../../utils/getEvents";
 
 import { UserContext } from "../../../store/userContext";
 import { EventContext } from "../../../store/eventContext";
+import { DayOfWeeks } from "../../../types";
 
 const Actions = () => {
-	const taskRef = createRef<HTMLInputElement>();
+	const textRef = createRef<HTMLInputElement>();
 	const dayRef = createRef<HTMLSelectElement>();
-	const timeRef = createRef<HTMLInputElement>();
+	// const timeRef = createRef<HTMLInputElement>();
 
 	const { user } = useContext(UserContext);
-	const { addEvent } = useContext(EventContext);
+	const { filterEvents } = useContext(EventContext);
 
-	const createEvent = (event: {}) => {
+	const createEvent = (event: { dayOfWeek: DayOfWeeks; description: string }) => {
 		fetch("https://latam-challenge-2.deta.dev/api/v1/events", {
 			method: "POST",
 			body: JSON.stringify(event),
@@ -37,7 +38,7 @@ const Actions = () => {
 				if (data.message) notify("error", data.message);
 				else {
 					notify("success", "Event created with success!");
-					getEvents(data.events.dayOfWeek, user.token, addEvent);
+					filterEvents(event.dayOfWeek);
 				}
 			});
 	};
@@ -45,16 +46,18 @@ const Actions = () => {
 	const submitHandler = (event: FormEvent) => {
 		event.preventDefault();
 
-		if (dayRef.current!.value.trim() !== "" && taskRef.current!.value.trim() !== "") {
+		if (dayRef.current!.value.trim() !== "" && textRef.current!.value.trim() !== "") {
 			const newEvent = {
-				dayOfWeek: dayRef.current!.value,
-				description: taskRef.current!.value,
+				dayOfWeek: dayRef.current!.value as DayOfWeeks,
+				description: textRef.current!.value,
 			};
 
 			createEvent(newEvent);
 		} else {
 			notify("warning", "Complete all the fields correctly!");
 		}
+
+		textRef.current!.value = "";
 	};
 
 	return (
@@ -62,7 +65,7 @@ const Actions = () => {
 			<Form onSubmit={submitHandler} className="form__actions">
 				<section className="actions__inputs">
 					<Input
-						ref={taskRef}
+						ref={textRef}
 						name="task_description"
 						id="task_description"
 						placeholder="Task or issue"
@@ -77,7 +80,7 @@ const Actions = () => {
 						<option value="saturday">Saturday</option>
 						<option value="sunday">Sunday</option>
 					</Select>
-					<Input ref={timeRef} type="time" name="meeting_time" id="meeting_time" className="input__action" />
+					{/* <Input ref={timeRef} type="time" name="meeting_time" id="meeting_time" className="input__action" /> */}
 				</section>
 
 				<section className="actions__buttons">
