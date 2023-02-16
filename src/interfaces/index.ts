@@ -1,4 +1,4 @@
-import { NewTaskData, Task, UserData } from "../types";
+import { DayOfWeeks, NewTaskData, Task, UniqueEvent, UniqueEventData, UserData } from "../types";
 
 export interface AuthContextInterface {
 	isLogged: boolean;
@@ -20,4 +20,13 @@ export interface UserContextInterface {
 	user: UserData;
 	saveInfo: (user: UserData) => void;
 	clearInfo: () => void;
+}
+
+export interface EventContextInterface {
+	events: UniqueEvent[];
+	filter: DayOfWeeks;
+	days: DayOfWeeks[];
+	filterEvents: (filter: DayOfWeeks) => void;
+	addEvent: (event: UniqueEventData) => void;
+	clearEvents: () => void;
 }
