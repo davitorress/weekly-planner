@@ -3,18 +3,15 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
 
-import { AuthProvider } from "./store/authContext";
 import { UserProvider } from "./store/userContext";
-import { TaskProvider } from "./store/taskContext";
+import { EventProvider } from "./store/eventContext";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
-		<AuthProvider>
-			<UserProvider>
-				<TaskProvider>
-					<App />
-				</TaskProvider>
-			</UserProvider>
-		</AuthProvider>
+		<UserProvider>
+			<EventProvider>
+				<App />
+			</EventProvider>
+		</UserProvider>
 	</React.StrictMode>
 );
