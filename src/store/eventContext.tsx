@@ -3,6 +3,8 @@ import { ReactNode, createContext, useState } from "react";
 import { EventContextInterface } from "../interfaces";
 import { DayOfWeeks, UniqueEvent, UniqueEventData } from "../types";
 
+import getEvents from "../utils/getEvents";
+
 const defaultEvents: EventContextInterface = {
 	events: [],
 	filter: "monday",
@@ -23,7 +25,9 @@ export const EventProvider = ({ children }: { children: ReactNode }) => {
 	const sortedEvents = [...events].sort((a, b) => a.createdAt.localeCompare(b.createdAt));
 
 	const filterEvents = (filter: DayOfWeeks) => {
+		clearEvents();
 		setFilter(filter);
+		getEvents(filter, JSON.parse(localStorage.getItem("user")!)["token"].toString(), addEvent);
 	};
 
 	const addEvent = ({ id, dayOfWeek, createdAt, description }: UniqueEventData) => {
