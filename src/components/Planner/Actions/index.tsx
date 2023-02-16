@@ -20,7 +20,7 @@ const Actions = () => {
 	// const timeRef = createRef<HTMLInputElement>();
 
 	const { user } = useContext(UserContext);
-	const { filterEvents } = useContext(EventContext);
+	const { filter, filterEvents } = useContext(EventContext);
 
 	const createEvent = (event: { dayOfWeek: DayOfWeeks; description: string }) => {
 		fetch("https://latam-challenge-2.deta.dev/api/v1/events", {
@@ -39,6 +39,29 @@ const Actions = () => {
 				else {
 					notify("success", "Event created with success!");
 					filterEvents(event.dayOfWeek);
+				}
+			});
+	};
+
+	const deleteEvents = (day: DayOfWeeks) => {
+		fetch(`https://latam-challenge-2.deta.dev/api/v1/events?dayOfWeek=${day}`, {
+			method: "DELETE",
+			headers: {
+				accept: "application/json",
+				Authorization: `Bearer ${user.token}`,
+			},
+		})
+			.then((res) => {
+				if (!res.ok) {
+					return res.json();
+				}
+			})
+			.then((data) => {
+				if (data) {
+					notify("error", data.message);
+				} else {
+					notify("success", `${day} events was deleted!`);
+					filterEvents(filter);
 				}
 			});
 	};
@@ -87,7 +110,7 @@ const Actions = () => {
 					<Button type="submit" className="button__action add" fontSize="2rem">
 						+ Add to calendar
 					</Button>
-					<Button type="reset" className="button__action remove" fontSize="2rem">
+					<Button type="reset" className="button__action remove" fontSize="2rem" onClick={() => deleteEvents(filter)}>
 						&minus; Delete All
 					</Button>
 				</section>
