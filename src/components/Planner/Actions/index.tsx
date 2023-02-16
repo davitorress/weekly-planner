@@ -7,12 +7,12 @@ import Input from "../../UI/Input";
 import Button from "../../UI/Button";
 import Select from "../../UI/Select";
 
+import { DayOfWeeks } from "../../../types";
+
 import notify from "../../../utils/toastNotify";
-import getEvents from "../../../utils/getEvents";
 
 import { UserContext } from "../../../store/userContext";
 import { EventContext } from "../../../store/eventContext";
-import { DayOfWeeks } from "../../../types";
 
 const Actions = () => {
 	const textRef = createRef<HTMLInputElement>();
