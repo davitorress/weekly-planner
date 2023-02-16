@@ -15,6 +15,7 @@ const defaultUser: UserContextInterface = userData
 	  }
 	: {
 			user: {
+				token: "",
 				id: "",
 				city: "",
 			},
@@ -37,6 +38,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 	const clearInfo = () => {
 		localStorage.removeItem("user");
 		setUserState({
+			token: "",
 			id: "",
 			city: "",
 		});
