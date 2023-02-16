@@ -1,12 +1,22 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import { StyledCard, StyledCards, StyledSection, StyledTasks, StyledTime } from "./styles";
 import Button from "../../../UI/Button";
 
-import { TaskContext } from "../../../../store/taskContext";
+import getEvents from "../../../../utils/getEvents";
+
+import { UserContext } from "../../../../store/userContext";
+import { EventContext } from "../../../../store/eventContext";
 
 const BoardTasks = () => {
-	const { tasks, removeTask } = useContext(TaskContext);
+	const { user } = useContext(UserContext);
+	const { events, filter, addEvent, clearEvents } = useContext(EventContext);
+
+	useEffect(() => {
+		console.log("oi");
+		clearEvents();
+		getEvents(filter, user.token, addEvent);
+	}, [filter]);
 
 	return (
 		<StyledSection>
@@ -14,22 +24,20 @@ const BoardTasks = () => {
 				<StyledTime>Time</StyledTime>
 			</StyledTasks>
 
-			{tasks.map(({ id, day, time, cards }) => {
+			{events.map(({ id, dayOfWeek, createdAt, cards }) => {
 				const invalid = cards.length > 1 ? "invalid" : "";
 
 				return (
 					<StyledTasks key={id}>
-						<StyledTime day={day} className={invalid}>
-							{time.split(":")[0]}h{time.split(":")[1]}m
+						<StyledTime day={dayOfWeek} className={invalid}>
+							{createdAt.split(":")[0]}h{createdAt.split(":")[1]}m
 						</StyledTime>
 						<StyledCards className={invalid}>
-							{cards.map((text, index) => {
+							{cards.map(({ id, description }) => {
 								return (
-									<StyledCard key={`${id}-${index}`} day={day} className={invalid}>
-										<p>{text}</p>
-										<Button className="button__card" onClick={() => removeTask(id, index)}>
-											Delete
-										</Button>
+									<StyledCard key={id} day={dayOfWeek} className={invalid}>
+										<p>{description}</p>
+										<Button className="button__card">Delete</Button>
 									</StyledCard>
 								);
 							})}
