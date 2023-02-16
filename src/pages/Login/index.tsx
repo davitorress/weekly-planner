@@ -71,6 +71,7 @@ const Login = () => {
 					} else {
 						notify("success", `Welcome, ${data.user.firstName}!`);
 						saveInfo({
+							token: data.token,
 							id: data.user._id,
 							city: data.user.city,
 						});
