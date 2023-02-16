@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useLayoutEffect } from "react";
 
 import { StyledCard, StyledCards, StyledSection, StyledTasks, StyledTime } from "./styles";
 import Button from "../../../UI/Button";
@@ -12,11 +12,10 @@ const BoardTasks = () => {
 	const { user } = useContext(UserContext);
 	const { events, filter, addEvent, clearEvents } = useContext(EventContext);
 
-	useEffect(() => {
-		console.log("oi");
+	useLayoutEffect(() => {
 		clearEvents();
 		getEvents(filter, user.token, addEvent);
-	}, [filter]);
+	}, []);
 
 	return (
 		<StyledSection>
