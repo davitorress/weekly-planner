@@ -19,6 +19,7 @@ export const StyledLi = styled.li`
 	color: #000000e5;
 	font-weight: 600;
 	font-size: 2rem;
+	text-transform: capitalize;
 
 	cursor: pointer;
 	transition: all 0.5s ease-in;

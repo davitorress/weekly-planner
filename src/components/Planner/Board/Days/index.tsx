@@ -2,21 +2,16 @@ import { useContext } from "react";
 
 import { StyledLi, StyledUl } from "./styles";
 
-import { TaskContext } from "../../../../store/taskContext";
+import { EventContext } from "../../../../store/eventContext";
 
 const BoardDays = () => {
-	const { days, filter, filterTasks } = useContext(TaskContext);
+	const { days, filter, filterEvents } = useContext(EventContext);
 
 	return (
 		<StyledUl>
 			{days.map((day) => {
 				return (
-					<StyledLi
-						key={day.toLowerCase()}
-						day={day.toLowerCase()}
-						className={filter === day.toLowerCase() ? "active" : ""}
-						onClick={() => filterTasks(day.toLowerCase())}
-					>
+					<StyledLi key={day} day={day} className={filter === day ? "active" : ""} onClick={() => filterEvents(day)}>
 						{day}
 					</StyledLi>
 				);
