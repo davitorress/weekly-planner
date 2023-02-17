@@ -1,19 +1,5 @@
 import styled from "styled-components";
 
-export const BackdropStyled = styled.div`
-	top: 0;
-	left: 0;
-	z-index: 20;
-	position: fixed;
-
-	width: 100%;
-	height: 100vh;
-
-	cursor: pointer;
-
-	background-color: rgba(0, 0, 0, 0.7);
-`;
-
 export const ModalStyled = styled.section`
 	top: calc((100% - 250px) / 2);
 	left: calc((100% - 720px) / 2);

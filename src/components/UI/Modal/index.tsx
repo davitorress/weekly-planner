@@ -3,8 +3,10 @@ import ReactDOM from "react-dom";
 import { IoIosClose } from "react-icons/io";
 import { IoWarningOutline } from "react-icons/io5";
 
-import { ActionsStyled, BackdropStyled, ModalStyled, SectionStyled } from "./styles";
+import { ActionsStyled, ModalStyled, SectionStyled } from "./styles";
+
 import Button from "../Button";
+import { BackdropStyled } from "../../Styled";
 
 interface ModalProps {
 	onCancel: () => void;

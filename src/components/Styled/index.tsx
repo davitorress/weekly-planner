@@ -61,3 +61,17 @@ export const Icon = styled.i`
 		display: block;
 	}
 `;
+
+export const BackdropStyled = styled.div`
+	top: 0;
+	left: 0;
+	z-index: 20;
+	position: fixed;
+
+	width: 100%;
+	height: 100vh;
+
+	cursor: pointer;
+
+	background-color: rgba(0, 0, 0, 0.7);
+`;
