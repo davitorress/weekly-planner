@@ -59,4 +59,23 @@ export const StyledButton = styled.button`
 		font-size: 1.8rem;
 		text-decoration: underline;
 	}
+
+	&.button__modal {
+		width: 100%;
+		padding: 14px 0;
+
+		font-weight: 500;
+		font-size: 1.6rem;
+
+		border-radius: 8px;
+		border: 1px solid #4f4f4f;
+	}
+	&.button__modal__cancel {
+		color: #4f4f4f;
+	}
+	&.button__modal__confirm {
+		color: #fff;
+		background-color: var(--button-remove);
+		border: 1px solid var(--button-remove);
+	}
 `;
