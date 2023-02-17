@@ -3,8 +3,6 @@ import { ReactNode, createContext, useState } from "react";
 import { EventContextInterface } from "../interfaces";
 import { DayOfWeeks, UniqueEvent, UniqueEventData } from "../types";
 
-import Loading from "../components/UI/Loading";
-
 import getEvents from "../utils/getEvents";
 
 const defaultEvents: EventContextInterface = {
@@ -23,17 +21,13 @@ export const EventContext = createContext(defaultEvents);
 export const EventProvider = ({ children }: { children: ReactNode }) => {
 	const [events, setEvents] = useState(defaultEvents.events);
 	const [filter, setFilter] = useState(defaultEvents.filter);
-	const [isFetching, setIsFetching] = useState(false);
 
 	const sortedEvents = [...events].sort((a, b) => a.createdAt.localeCompare(b.createdAt));
 
 	const filterEvents = (filter: DayOfWeeks) => {
-		setIsFetching(true);
 		clearEvents();
 		setFilter(filter);
-		getEvents(filter, JSON.parse(localStorage.getItem("user")!)["token"].toString(), addEvent, () =>
-			setIsFetching(false)
-		);
+		getEvents(filter, JSON.parse(localStorage.getItem("user")!)["token"].toString(), addEvent);
 	};
 
 	const addEvent = ({ id, dayOfWeek, createdAt, description }: UniqueEventData) => {
@@ -67,10 +61,5 @@ export const EventProvider = ({ children }: { children: ReactNode }) => {
 		clearEvents,
 	};
 
-	return (
-		<EventContext.Provider value={ctx}>
-			{isFetching && <Loading />}
-			{children}
-		</EventContext.Provider>
-	);
+	return <EventContext.Provider value={ctx}>{children}</EventContext.Provider>;
 };
