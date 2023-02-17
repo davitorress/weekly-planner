@@ -6,7 +6,7 @@ import { IoWarningOutline } from "react-icons/io5";
 import { ActionsStyled, ModalStyled, SectionStyled } from "./styles";
 
 import Button from "../Button";
-import { BackdropStyled } from "../../Styled";
+import { StyledBackdrop } from "../../Styled";
 
 interface ModalProps {
 	onCancel: () => void;
@@ -44,7 +44,7 @@ const ModalOverlay = (props: ModalProps) => {
 const Modal = (props: ModalProps) => {
 	return (
 		<>
-			{ReactDOM.createPortal(<BackdropStyled onClick={props.onCancel} />, portalElement)}
+			{ReactDOM.createPortal(<StyledBackdrop onClick={props.onCancel} />, portalElement)}
 			{ReactDOM.createPortal(
 				<ModalOverlay onCancel={props.onCancel} onConfirm={props.onConfirm}>
 					{props.children}
