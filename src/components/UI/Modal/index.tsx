@@ -1,23 +1,40 @@
 import { ReactNode } from "react";
 import ReactDOM from "react-dom";
-import { VscError } from "react-icons/vsc";
-import { IoMegaphoneOutline } from "react-icons/io5";
+import { IoIosClose } from "react-icons/io";
+import { IoWarningOutline } from "react-icons/io5";
 
-import { BackdropStyled, ModalStyled } from "./styles";
+import { ActionsStyled, BackdropStyled, ModalStyled, SectionStyled } from "./styles";
+import Button from "../Button";
 
 interface ModalProps {
-	onClose: () => void;
+	onCancel: () => void;
+	onConfirm: () => void;
 	children: ReactNode;
 }
 
 const portalElement = document.querySelector("#overlay")!;
 
-const ModalOverlay = (props: { children: ReactNode; onClose: () => void }) => {
+const ModalOverlay = (props: ModalProps) => {
 	return (
-		<ModalStyled className="success">
-			<VscError className="close-icon" onClick={props.onClose} />
-			<IoMegaphoneOutline size={84} />
-			{props.children}
+		<ModalStyled>
+			<IoIosClose className="close-icon" onClick={props.onCancel} size={36} />
+			<SectionStyled>
+				<div className="warning-icon">
+					<IoWarningOutline size={36} />
+				</div>
+				<div className="content">
+					<h3>Are you sure?</h3>
+					{props.children}
+				</div>
+			</SectionStyled>
+			<ActionsStyled>
+				<Button className="button__modal button__modal__cancel" onClick={props.onCancel}>
+					No, cancel
+				</Button>
+				<Button className="button__modal button__modal__confirm" onClick={props.onConfirm}>
+					Yes, confirm
+				</Button>
+			</ActionsStyled>
 		</ModalStyled>
 	);
 };
@@ -25,8 +42,13 @@ const ModalOverlay = (props: { children: ReactNode; onClose: () => void }) => {
 const Modal = (props: ModalProps) => {
 	return (
 		<>
-			{ReactDOM.createPortal(<BackdropStyled onClick={props.onClose} />, portalElement)}
-			{ReactDOM.createPortal(<ModalOverlay onClose={props.onClose}>{props.children}</ModalOverlay>, portalElement)}
+			{ReactDOM.createPortal(<BackdropStyled onClick={props.onCancel} />, portalElement)}
+			{ReactDOM.createPortal(
+				<ModalOverlay onCancel={props.onCancel} onConfirm={props.onConfirm}>
+					{props.children}
+				</ModalOverlay>,
+				portalElement
+			)}
 		</>
 	);
 };

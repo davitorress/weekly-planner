@@ -11,12 +11,12 @@ export const BackdropStyled = styled.div`
 
 	cursor: pointer;
 
-	background-color: rgba(0, 0, 0, 0.75);
+	background-color: rgba(0, 0, 0, 0.7);
 `;
 
 export const ModalStyled = styled.section`
-	top: 20vh;
-	left: 30%;
+	top: calc((100% - 250px) / 2);
+	left: calc((100% - 720px) / 2);
 	z-index: 30;
 	position: fixed;
 
@@ -25,29 +25,30 @@ export const ModalStyled = styled.section`
 	justify-content: space-evenly;
 	flex-direction: column;
 
-	padding: 1rem;
-	width: 40%;
-	height: 60vh;
+	padding: 4rem;
+
+	width: 720px;
+	height: 250px;
 
 	font-size: 3rem;
 	font-family: "Mulish", sans-serif;
 
 	border-radius: 14px;
-	background-color: var(--background-light);
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+	background-color: #fff;
+	box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.12), 0px 20px 20px rgba(0, 0, 0, 0.08);
 
 	animation: slide-down 300ms ease-out forwards;
-
-	&.success {
-		color: green;
-	}
 
 	.close-icon {
 		top: 20px;
 		right: 30px;
 		position: absolute;
 
+		padding: 0.5rem;
 		cursor: pointer;
+
+		border-radius: 50%;
+		background-color: #e5e5e5;
 	}
 
 	@keyframes slide-down {
@@ -60,4 +61,54 @@ export const ModalStyled = styled.section`
 			transform: translateY(0);
 		}
 	}
+`;
+
+export const SectionStyled = styled.section`
+	display: flex;
+	gap: 2rem;
+
+	width: 100%;
+	height: 100%;
+
+	.warning-icon {
+		width: 96px;
+		height: 84px;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		color: #fff;
+
+		border-radius: 14px;
+		background-color: var(--button-remove);
+	}
+
+	.content {
+		width: 100%;
+		height: 84px;
+
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.content h3 {
+		color: #54595e;
+		font-size: 3rem;
+	}
+
+	.content p {
+		color: #54595e99;
+		font-size: 1.8rem;
+	}
+`;
+
+export const ActionsStyled = styled.section`
+	width: 100%;
+	height: fit-content;
+
+	display: flex;
+	gap: 5%;
 `;
