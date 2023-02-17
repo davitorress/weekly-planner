@@ -5,6 +5,7 @@ import CompassWhite from "../../assets/compass-white.svg";
 import UserIcon from "../../assets/icon-user.svg";
 import LockIcon from "../../assets/icon-password.svg";
 
+import Loading from "../../components/UI/Loading";
 import Form from "../../components/UI/Form";
 import InputGroup from "../../components/UI/InputGroup";
 import Button from "../../components/UI/Button";
@@ -18,6 +19,7 @@ const Login = () => {
 	const navigate = useNavigate();
 	const { saveInfo } = useContext(UserContext);
 
+	const [isFetching, setIsFetching] = useState(false);
 	const [errorMessage, setErrorMessage] = useState<JSX.Element | string>(<></>);
 
 	const {
@@ -80,6 +82,8 @@ const Login = () => {
 					notify("error", data);
 					setErrorMessage(data);
 				}
+
+				setIsFetching(false);
 			});
 	};
 
@@ -106,6 +110,7 @@ const Login = () => {
 			password: passwordValue,
 		};
 
+		setIsFetching(true);
 		loginUser(userData);
 
 		resetUsername();
@@ -117,64 +122,72 @@ const Login = () => {
 	};
 
 	return (
-		<StyledAccount maxWidth={380}>
-			<section>
-				<section className="container">
-					<div>
-						<h1>Welcome,</h1>
-						<p>To continue browsing safely, log in to the network.</p>
-					</div>
+		<>
+			{isFetching && <Loading />}
 
-					<Form onSubmit={submitHandler} className="form__account">
-						<section className="form__inputs">
-							<h2 className="form__title">Login</h2>
+			<StyledAccount maxWidth={380}>
+				<section>
+					<section className="container">
+						<div>
+							<h1>Welcome,</h1>
+							<p>To continue browsing safely, log in to the network.</p>
+						</div>
 
-							<InputGroup
-								name="username"
-								id="username"
-								placeholder="user name"
-								iconPath={UserIcon}
-								className={`input__account ${usernameHasError ? "invalid" : ""} ${usernameValue ? "input__icon" : ""}`}
-								value={usernameValue}
-								onChange={usernameChange}
-								onFocus={usernameFocus}
-							/>
-							<InputGroup
-								type="password"
-								name="password"
-								id="password"
-								placeholder="password"
-								iconPath={LockIcon}
-								className={`input__account ${passwordHasError ? "invalid" : ""} ${passwordValue ? "input__icon" : ""}`}
-								value={passwordValue}
-								onChange={passwordChange}
-								onFocus={passwordFocus}
-							/>
+						<Form onSubmit={submitHandler} className="form__account">
+							<section className="form__inputs">
+								<h2 className="form__title">Login</h2>
 
-							{errorMessage && <p className="error-message">{errorMessage}</p>}
-						</section>
+								<InputGroup
+									name="username"
+									id="username"
+									placeholder="user name"
+									iconPath={UserIcon}
+									className={`input__account ${usernameHasError ? "invalid" : ""} ${
+										usernameValue ? "input__icon" : ""
+									}`}
+									value={usernameValue}
+									onChange={usernameChange}
+									onFocus={usernameFocus}
+								/>
+								<InputGroup
+									type="password"
+									name="password"
+									id="password"
+									placeholder="password"
+									iconPath={LockIcon}
+									className={`input__account ${passwordHasError ? "invalid" : ""} ${
+										passwordValue ? "input__icon" : ""
+									}`}
+									value={passwordValue}
+									onChange={passwordChange}
+									onFocus={passwordFocus}
+								/>
 
-						<section>
-							<Button type="submit" className="button__form" fontSize="3.2rem">
-								Log in
-							</Button>
-							<div className="form__link">
-								<p>Don't have an account?</p>
-								<Button type="reset" className="button__link" onClick={registerHandler}>
-									Sign up
+								{errorMessage && <p className="error-message">{errorMessage}</p>}
+							</section>
+
+							<section>
+								<Button type="submit" className="button__form" fontSize="3.2rem">
+									Log in
 								</Button>
-							</div>
-						</section>
-					</Form>
+								<div className="form__link">
+									<p>Don't have an account?</p>
+									<Button type="reset" className="button__link" onClick={registerHandler}>
+										Sign up
+									</Button>
+								</div>
+							</section>
+						</Form>
+					</section>
 				</section>
-			</section>
 
-			<section className="background-img">
-				<a href="https://compass.uol/en/home/" target="_blank">
-					<img src={CompassWhite} alt="Compass.uol logo" />
-				</a>
-			</section>
-		</StyledAccount>
+				<section className="background-img">
+					<a href="https://compass.uol/en/home/" target="_blank">
+						<img src={CompassWhite} alt="Compass.uol logo" />
+					</a>
+				</section>
+			</StyledAccount>
+		</>
 	);
 };
 

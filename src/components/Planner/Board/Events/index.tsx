@@ -2,6 +2,7 @@ import { useContext, useLayoutEffect, useState } from "react";
 
 import { StyledCard, StyledCards, StyledSection, StyledTasks, StyledTime } from "./styles";
 import Modal from "../../../UI/Modal";
+import Loading from "../../../UI/Loading";
 import Button from "../../../UI/Button";
 
 import notify from "../../../../utils/toastNotify";
@@ -17,10 +18,12 @@ const BoardTasks = () => {
 	const [eventId, setEventId] = useState("");
 	const [showModal, setShowModal] = useState(false);
 	const [modalContent, setModalContent] = useState("");
+	const [isFetching, setIsFetching] = useState(false);
 
 	useLayoutEffect(() => {
+		setIsFetching(true);
 		clearEvents();
-		getEvents(filter, user.token, addEvent);
+		getEvents(filter, user.token, addEvent, () => setIsFetching(false));
 	}, []);
 
 	const deleteEvent = (id: string) => {
@@ -42,6 +45,8 @@ const BoardTasks = () => {
 					notify("success", `Event was deleted!`);
 					filterEvents(filter);
 				}
+
+				setIsFetching(false);
 			});
 	};
 
@@ -57,6 +62,7 @@ const BoardTasks = () => {
 	};
 
 	const modalConfirm = () => {
+		setIsFetching(true);
 		deleteEvent(eventId);
 		modalCancel();
 	};
@@ -70,6 +76,8 @@ const BoardTasks = () => {
 					children={<p>This action will delete the event ({modalContent}) permanently!</p>}
 				/>
 			)}
+
+			{isFetching && <Loading />}
 
 			<StyledSection>
 				<StyledTasks>

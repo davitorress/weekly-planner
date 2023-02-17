@@ -3,6 +3,7 @@ import { FormEvent, createRef, useContext, useState } from "react";
 import { StyledActions } from "./styles";
 
 import Modal from "../../UI/Modal";
+import Loading from "../../UI/Loading";
 import Form from "../../UI/Form";
 import Input from "../../UI/Input";
 import Button from "../../UI/Button";
@@ -24,6 +25,7 @@ const Actions = () => {
 	const { filter, filterEvents } = useContext(EventContext);
 
 	const [showModal, setShowModal] = useState(false);
+	const [isFetching, setIsFetching] = useState(false);
 
 	const createEvent = (event: { dayOfWeek: DayOfWeeks; description: string }) => {
 		fetch("https://latam-challenge-2.deta.dev/api/v1/events", {
@@ -43,6 +45,8 @@ const Actions = () => {
 					notify("success", "Event created with success!");
 					filterEvents(event.dayOfWeek);
 				}
+
+				setIsFetching(false);
 			});
 	};
 
@@ -66,10 +70,13 @@ const Actions = () => {
 					notify("success", `${day} events was deleted!`);
 					filterEvents(filter);
 				}
+
+				setIsFetching(false);
 			});
 	};
 
 	const modalConfirm = () => {
+		setIsFetching(true);
 		deleteEvents(filter);
 		setShowModal(false);
 	};
@@ -83,6 +90,7 @@ const Actions = () => {
 				description: textRef.current!.value,
 			};
 
+			setIsFetching(true);
 			createEvent(newEvent);
 		} else {
 			notify("warning", "Complete all the fields correctly!");
@@ -100,6 +108,8 @@ const Actions = () => {
 					children={<p>This action will delete all {filter} events permanently</p>}
 				/>
 			)}
+
+			{isFetching && <Loading />}
 
 			<StyledActions>
 				<Form onSubmit={submitHandler} className="form__actions">

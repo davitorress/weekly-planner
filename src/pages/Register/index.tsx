@@ -10,10 +10,12 @@ import { StyledAccount } from "../../components/Styled";
 
 import useInput from "../../hooks/useInput";
 import notify from "../../utils/toastNotify";
+import Loading from "../../components/UI/Loading";
 
 const Register = () => {
 	const navigate = useNavigate();
 	const [errorMessage, setErrorMessage] = useState("");
+	const [isFetching, setIsFetching] = useState(false);
 
 	const {
 		value: firstName,
@@ -139,6 +141,8 @@ const Register = () => {
 					notify("error", data);
 					setErrorMessage(data);
 				}
+
+				setIsFetching(false);
 			});
 	};
 
@@ -166,6 +170,7 @@ const Register = () => {
 			confirmPassword: confirmPasswordValue,
 		};
 
+		setIsFetching(true);
 		registerUser(userData);
 
 		resetFirstName();
@@ -184,6 +189,8 @@ const Register = () => {
 
 	return (
 		<>
+			{isFetching && <Loading />}
+
 			<StyledAccount maxWidth={480}>
 				<section>
 					<section className="container">
