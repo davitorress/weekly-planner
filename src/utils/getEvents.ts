@@ -2,7 +2,12 @@ import notify from "./toastNotify";
 
 import { UniqueEventData } from "../types";
 
-const getEvents = (day: string, token: string, successFn: (value: UniqueEventData) => void) => {
+const getEvents = (
+	day: string,
+	token: string,
+	successFn: (value: UniqueEventData) => void,
+	setIsLoading: () => void
+) => {
 	fetch(`https://latam-challenge-2.deta.dev/api/v1/events?dayOfWeek=${day}`, {
 		method: "GET",
 		headers: {
@@ -33,6 +38,8 @@ const getEvents = (day: string, token: string, successFn: (value: UniqueEventDat
 					successFn(eventData);
 				}
 			}
+
+			setIsLoading();
 		});
 };
 
