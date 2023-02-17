@@ -17,6 +17,7 @@ const Register = () => {
 
 	const {
 		value: firstName,
+		isValid: firstNameIsValid,
 		hasError: firstNameHasError,
 		valueChangeHandler: firstNameChange,
 		inputFocusHandler: firstNameFocus,
@@ -27,6 +28,7 @@ const Register = () => {
 
 	const {
 		value: lastName,
+		isValid: lastNameIsValid,
 		hasError: lastNameHasError,
 		valueChangeHandler: lastNameChange,
 		inputFocusHandler: lastNameFocus,
@@ -37,6 +39,7 @@ const Register = () => {
 
 	const {
 		value: birthDate,
+		isValid: birthDateIsValid,
 		hasError: birthDateHasError,
 		valueChangeHandler: birthDateChange,
 		inputFocusHandler: birthDateFocus,
@@ -47,6 +50,7 @@ const Register = () => {
 
 	const {
 		value: countryValue,
+		isValid: countryIsValid,
 		hasError: countryHasError,
 		valueChangeHandler: countryChange,
 		inputFocusHandler: countryFocus,
@@ -57,6 +61,7 @@ const Register = () => {
 
 	const {
 		value: cityValue,
+		isValid: cityIsValid,
 		hasError: cityHasError,
 		valueChangeHandler: cityChange,
 		inputFocusHandler: cityFocus,
@@ -67,6 +72,7 @@ const Register = () => {
 
 	const {
 		value: emailValue,
+		isValid: emailIsValid,
 		hasError: emailHasError,
 		valueChangeHandler: emailChange,
 		inputFocusHandler: emailFocus,
@@ -77,6 +83,7 @@ const Register = () => {
 
 	const {
 		value: passwordValue,
+		isValid: passwordIsValid,
 		hasError: passwordHasError,
 		valueChangeHandler: passwordChange,
 		inputFocusHandler: passwordFocus,
@@ -87,6 +94,7 @@ const Register = () => {
 
 	const {
 		value: confirmPasswordValue,
+		isValid: confirmPasswordIsValid,
 		hasError: confirmPasswordHasError,
 		valueChangeHandler: confirmPasswordChange,
 		inputFocusHandler: confirmPasswordFocus,
@@ -96,14 +104,14 @@ const Register = () => {
 	});
 
 	let formIsValid =
-		firstNameHasError ||
-		lastNameHasError ||
-		birthDateHasError ||
-		countryHasError ||
-		cityHasError ||
-		emailHasError ||
-		passwordHasError ||
-		confirmPasswordHasError;
+		firstNameIsValid ||
+		lastNameIsValid ||
+		birthDateIsValid ||
+		countryIsValid ||
+		cityIsValid ||
+		emailIsValid ||
+		passwordIsValid ||
+		confirmPasswordIsValid;
 
 	const registerUser = (user: {}) => {
 		fetch("https://latam-challenge-2.deta.dev/api/v1/users/sign-up", {
