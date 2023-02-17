@@ -62,7 +62,7 @@ export const Icon = styled.i`
 	}
 `;
 
-export const BackdropStyled = styled.div`
+export const StyledBackdrop = styled.div`
 	top: 0;
 	left: 0;
 	z-index: 20;
@@ -74,4 +74,26 @@ export const BackdropStyled = styled.div`
 	cursor: pointer;
 
 	background-color: rgba(0, 0, 0, 0.7);
+`;
+
+export const StyledLoading = styled.div`
+	top: calc((100% - 150px) / 2);
+	left: calc((100% - 150px) / 2);
+	z-index: 30;
+	position: fixed;
+
+	width: 150px;
+	height: 150px;
+
+	border-radius: 50%;
+	border: 15px solid var(--background-light);
+	border-top-color: var(--button-add);
+
+	animation: isRotating 1s infinite;
+
+	@keyframes isRotating {
+		to {
+			transform: rotate(1turn);
+		}
+	}
 `;
