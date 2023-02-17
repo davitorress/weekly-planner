@@ -1,6 +1,7 @@
-import { useContext, useLayoutEffect } from "react";
+import { useContext, useLayoutEffect, useState } from "react";
 
 import { StyledCard, StyledCards, StyledSection, StyledTasks, StyledTime } from "./styles";
+import Modal from "../../../UI/Modal";
 import Button from "../../../UI/Button";
 
 import notify from "../../../../utils/toastNotify";
@@ -12,6 +13,10 @@ import { EventContext } from "../../../../store/eventContext";
 const BoardTasks = () => {
 	const { user } = useContext(UserContext);
 	const { events, filter, addEvent, clearEvents, filterEvents } = useContext(EventContext);
+
+	const [eventId, setEventId] = useState("");
+	const [showModal, setShowModal] = useState(false);
+	const [modalContent, setModalContent] = useState("");
 
 	useLayoutEffect(() => {
 		clearEvents();
@@ -40,36 +45,62 @@ const BoardTasks = () => {
 			});
 	};
 
+	const deleteHandler = (id: string, event: string) => {
+		setEventId(id);
+		setModalContent(event);
+		setShowModal(true);
+	};
+
+	const modalCancel = () => {
+		setShowModal(false);
+		setModalContent("");
+	};
+
+	const modalConfirm = () => {
+		deleteEvent(eventId);
+		modalCancel();
+	};
+
 	return (
-		<StyledSection>
-			<StyledTasks>
-				<StyledTime>Time</StyledTime>
-			</StyledTasks>
+		<>
+			{showModal && (
+				<Modal
+					onCancel={modalCancel}
+					onConfirm={modalConfirm}
+					children={<p>This action will delete the event ({modalContent}) permanently!</p>}
+				/>
+			)}
 
-			{events.map(({ id, dayOfWeek, createdAt, cards }) => {
-				const invalid = cards.length > 1 ? "invalid" : "";
+			<StyledSection>
+				<StyledTasks>
+					<StyledTime>Time</StyledTime>
+				</StyledTasks>
 
-				return (
-					<StyledTasks key={id}>
-						<StyledTime day={dayOfWeek} className={invalid}>
-							{createdAt.split(":")[0]}h{createdAt.split(":")[1]}m
-						</StyledTime>
-						<StyledCards className={invalid}>
-							{cards.map(({ id, description }) => {
-								return (
-									<StyledCard key={id} day={dayOfWeek} className={invalid}>
-										<p>{description}</p>
-										<Button className="button__card" onClick={() => deleteEvent(id)}>
-											Delete
-										</Button>
-									</StyledCard>
-								);
-							})}
-						</StyledCards>
-					</StyledTasks>
-				);
-			})}
-		</StyledSection>
+				{events.map(({ id, dayOfWeek, createdAt, cards }) => {
+					const invalid = cards.length > 1 ? "invalid" : "";
+
+					return (
+						<StyledTasks key={id}>
+							<StyledTime day={dayOfWeek} className={invalid}>
+								{createdAt.split(":")[0]}h{createdAt.split(":")[1]}m
+							</StyledTime>
+							<StyledCards className={invalid}>
+								{cards.map(({ id, description }) => {
+									return (
+										<StyledCard key={id} day={dayOfWeek} className={invalid}>
+											<p>{description}</p>
+											<Button className="button__card" onClick={() => deleteHandler(id, description)}>
+												Delete
+											</Button>
+										</StyledCard>
+									);
+								})}
+							</StyledCards>
+						</StyledTasks>
+					);
+				})}
+			</StyledSection>
+		</>
 	);
 };
 

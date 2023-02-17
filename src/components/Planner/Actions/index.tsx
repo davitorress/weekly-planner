@@ -1,7 +1,8 @@
-import { FormEvent, createRef, useContext } from "react";
+import { FormEvent, createRef, useContext, useState } from "react";
 
 import { StyledActions } from "./styles";
 
+import Modal from "../../UI/Modal";
 import Form from "../../UI/Form";
 import Input from "../../UI/Input";
 import Button from "../../UI/Button";
@@ -21,6 +22,8 @@ const Actions = () => {
 
 	const { user } = useContext(UserContext);
 	const { filter, filterEvents } = useContext(EventContext);
+
+	const [showModal, setShowModal] = useState(false);
 
 	const createEvent = (event: { dayOfWeek: DayOfWeeks; description: string }) => {
 		fetch("https://latam-challenge-2.deta.dev/api/v1/events", {
@@ -66,6 +69,11 @@ const Actions = () => {
 			});
 	};
 
+	const modalConfirm = () => {
+		deleteEvents(filter);
+		setShowModal(false);
+	};
+
 	const submitHandler = (event: FormEvent) => {
 		event.preventDefault();
 
@@ -84,38 +92,48 @@ const Actions = () => {
 	};
 
 	return (
-		<StyledActions>
-			<Form onSubmit={submitHandler} className="form__actions">
-				<section className="actions__inputs">
-					<Input
-						ref={textRef}
-						name="task_description"
-						id="task_description"
-						placeholder="Task or issue"
-						className="input__action"
-					/>
-					<Select ref={dayRef} defaultValue="monday" className="select__action">
-						<option value="monday">Monday</option>
-						<option value="tuesday">Tuesday</option>
-						<option value="wednesday">Wednesday</option>
-						<option value="thursday">Thursday</option>
-						<option value="friday">Friday</option>
-						<option value="saturday">Saturday</option>
-						<option value="sunday">Sunday</option>
-					</Select>
-					{/* <Input ref={timeRef} type="time" name="meeting_time" id="meeting_time" className="input__action" /> */}
-				</section>
+		<>
+			{showModal && (
+				<Modal
+					onCancel={() => setShowModal(false)}
+					onConfirm={modalConfirm}
+					children={<p>This action will delete all {filter} events permanently</p>}
+				/>
+			)}
 
-				<section className="actions__buttons">
-					<Button type="submit" className="button__action add" fontSize="2rem">
-						+ Add to calendar
-					</Button>
-					<Button type="reset" className="button__action remove" fontSize="2rem" onClick={() => deleteEvents(filter)}>
-						&minus; Delete All
-					</Button>
-				</section>
-			</Form>
-		</StyledActions>
+			<StyledActions>
+				<Form onSubmit={submitHandler} className="form__actions">
+					<section className="actions__inputs">
+						<Input
+							ref={textRef}
+							name="task_description"
+							id="task_description"
+							placeholder="Task or issue"
+							className="input__action"
+						/>
+						<Select ref={dayRef} defaultValue="monday" className="select__action">
+							<option value="monday">Monday</option>
+							<option value="tuesday">Tuesday</option>
+							<option value="wednesday">Wednesday</option>
+							<option value="thursday">Thursday</option>
+							<option value="friday">Friday</option>
+							<option value="saturday">Saturday</option>
+							<option value="sunday">Sunday</option>
+						</Select>
+						{/* <Input ref={timeRef} type="time" name="meeting_time" id="meeting_time" className="input__action" /> */}
+					</section>
+
+					<section className="actions__buttons">
+						<Button type="submit" className="button__action add" fontSize="2rem">
+							+ Add to calendar
+						</Button>
+						<Button type="reset" className="button__action remove" fontSize="2rem" onClick={() => setShowModal(true)}>
+							&minus; Delete All
+						</Button>
+					</section>
+				</Form>
+			</StyledActions>
+		</>
 	);
 };
 
