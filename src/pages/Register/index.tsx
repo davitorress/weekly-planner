@@ -106,13 +106,13 @@ const Register = () => {
 	});
 
 	let formIsValid =
-		firstNameIsValid ||
-		lastNameIsValid ||
-		birthDateIsValid ||
-		countryIsValid ||
-		cityIsValid ||
-		emailIsValid ||
-		passwordIsValid ||
+		firstNameIsValid &&
+		lastNameIsValid &&
+		birthDateIsValid &&
+		countryIsValid &&
+		cityIsValid &&
+		emailIsValid &&
+		passwordIsValid &&
 		confirmPasswordIsValid;
 
 	const registerUser = (user: {}) => {

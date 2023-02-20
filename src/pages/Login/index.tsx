@@ -44,7 +44,7 @@ const Login = () => {
 		return value.trim().length >= 6;
 	});
 
-	let formIsValid = usernameIsValid || passwordIsValid;
+	let formIsValid = usernameIsValid && passwordIsValid;
 
 	useEffect(() => {
 		if (usernameHasError || passwordHasError) {
