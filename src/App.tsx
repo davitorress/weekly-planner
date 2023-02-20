@@ -19,9 +19,9 @@ function App() {
 			<ToastContainer />
 			<BrowserRouter>
 				<Routes>
-					<Route path="/" element={user.id ? <Dashboard /> : <Navigate to="/register" />} />
-					<Route path="/register" element={user.id ? <Navigate to="/" /> : <Register />} />
-					<Route path="/login" element={user.id ? <Navigate to="/" /> : <Login />} />
+					<Route path="/" element={user.token ? <Dashboard /> : <Navigate to="/register" />} />
+					<Route path="/register" element={user.token ? <Navigate to="/" /> : <Register />} />
+					<Route path="/login" element={user.token ? <Navigate to="/" /> : <Login />} />
 				</Routes>
 			</BrowserRouter>
 		</>
