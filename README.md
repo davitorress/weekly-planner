@@ -1,4 +1,4 @@
-# 2º CHALLENGE PB AWS REACT - Weekly Planner
+# 3º CHALLENGE PB AWS REACT - Weekly Planner
 
 > A planner to organize your daily problems.
 
@@ -13,20 +13,25 @@
 - JavaScript
 - TypeScript
 - React.js
+  - React Icons
   - React Router
+  - React Toastify
   - Styled Components
 
 ### Functionalities
 
 - Simple authentication
 - Protected routes
-- Save user in <i>localStorage</i>
+- Save token in _localStorage_ to persist login
 - Validation of fields in the register and login forms
 - Time and date in real time
 - Climate according to the registered city
-- Filter tasks by days of the week
-- Tasks sorted by time
-- Visual feedback for conflicting tasks
+- Events sorted by time
+- Visual feedback for conflicting events
+- Use of REST API for event handling
+- Visual error alerts, warnings and success messages
+- Confirmation modal for deleting events
+- Loading effect on REST requests
 
 ## Demonstration
 
@@ -54,15 +59,6 @@ Install dependencies:
 
 ```bash
 npm install
-```
-
----
-
-> **Note:**
-> you will need an <i>API Key</i> from the <a href="https://www.weatherapi.com/" title="https://www.weatherapi.com/">Weather API</a> website and create a **.env** file in the root path with this content
-
-```properties
-VITE_APP_WEATHER_API_KEY = [YOUR API KEY]
 ```
 
 ---
