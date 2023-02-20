@@ -150,7 +150,7 @@ const Register = () => {
 		event.preventDefault();
 
 		if (!formIsValid) {
-			notify("error", "Complete all the fields correctly!");
+			notify("warning", "Complete all the fields correctly!");
 			setErrorMessage("Complete all the fields correctly!");
 			return;
 		} else {
