@@ -85,7 +85,11 @@ const BoardTasks = () => {
 				</StyledTasks>
 
 				{events.map(({ id, dayOfWeek, createdAt, cards }) => {
-					const invalid = cards.length > 1 ? "invalid" : "";
+					let currentHour = new Date().toLocaleTimeString([], {
+						hour: "2-digit",
+						minute: "2-digit",
+					});
+					const invalid = cards.length > 1 || createdAt < currentHour ? "invalid" : "";
 
 					return (
 						<StyledTasks key={id}>
