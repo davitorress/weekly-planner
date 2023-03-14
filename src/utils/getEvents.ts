@@ -21,9 +21,6 @@ const getEvents = (
 		.then((data) => {
 			if (data.message) notify("error", data.message);
 			else {
-				notify("success", "Get with success!");
-				notify("info", `${data.events.length} events founded.`);
-
 				for (const event of data.events) {
 					const createdTime = event.createdAt.split("T")[1];
 					const time = `${createdTime.split(":")[0]}:${createdTime.split(":")[1]}`;
